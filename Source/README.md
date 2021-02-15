@@ -3,13 +3,11 @@
   <img width="200px" height="200px" src="../Docs/img/logo.jpg" alt="Project logo"></a>
 </p>
 
-<h3 align="center">Project Title</h3>
+<h3 align="center">Cogworks Essentials</h3>
 
 <div align="center">
 
-[![Project Code](https://img.shields.io/static/v1?label=project%20code&message=[project-code]&color=lightgray&style=flat-square)](https://sites.google.com/wearecogworks.com/cogworks-handbook/clients/template-client-landing) [![Version](https://img.shields.io/static/v1?label=&message=version&color=informational&style=flat-square)](https://github.com/thecogworks/cog-project-boilerplate/releases) [![License](https://img.shields.io/badge/license-MIT-4c9182.svg)](../LICENSE.md)
-
-Handbook: https://sites.google.com/wearecogworks.com/cogworks-handbook/clients
+[![Project Code](https://img.shields.io/static/v1?label=cog%20essentials&message=cog--essentials&color=lightgray&style=flat-square)]() [![Version](https://img.shields.io/static/v1?label=&message=version&color=informational&style=flat-square)](https://github.com/thecogworks/cog-essentials/releases) [![License](https://img.shields.io/badge/license-MIT-4c9182.svg)](LICENSE.md)
 
 </div>
 
@@ -17,15 +15,7 @@ Handbook: https://sites.google.com/wearecogworks.com/cogworks-handbook/clients
 
 ##### Links for DevOps environments
 
-- Build status - [![Build Status](https://dev.azure.com/cogworks/FEE0261-0878%20Feedinfo/_apis/build/status/thecogworks.FEE0261-0878?branchName=master)](https://dev.azure.com/cogworks/FEE0261-0878%20Feedinfo/_build/latest?definitionId=46&branchName=master)
-
-- Dev - [![Azure DevOps Dev](https://vsrm.dev.azure.com/cogworks/_apis/public/Release/badge/8fb1ea4c-46e4-49e9-a02e-496273b048db/2/2)](https://dev.azure.com/cogworks/FEE0261-0878%20Feedinfo/_release?_a=releases&view=mine&definitionId=2)
-
-- Staging - [![Azure DevOps Staging](https://vsrm.dev.azure.com/cogworks/_apis/public/Release/badge/8fb1ea4c-46e4-49e9-a02e-496273b048db/2/2)](https://dev.azure.com/cogworks/FEE0261-0878%20Feedinfo/_release?_a=releases&view=mine&definitionId=2)
-
-- UAT - [![Azure DevOps UAT](https://vsrm.dev.azure.com/cogworks/_apis/public/Release/badge/8fb1ea4c-46e4-49e9-a02e-496273b048db/2/2)](https://dev.azure.com/cogworks/FEE0261-0878%20Feedinfo/_release?_a=releases&view=mine&definitionId=2)
-
-- Live - [![Azure DevOps Live](https://vsrm.dev.azure.com/cogworks/_apis/public/Release/badge/8fb1ea4c-46e4-49e9-a02e-496273b048db/2/2)](https://dev.azure.com/cogworks/FEE0261-0878%20Feedinfo/_release?_a=releases&view=mine&definitionId=2)
+- Build status -
 
 ---
 
