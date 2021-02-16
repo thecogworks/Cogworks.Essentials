@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using Cogworks.Essentials.Constants.StringConstants;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Cogworks.Essentials.Extensions
 {
@@ -168,7 +169,8 @@ namespace Cogworks.Essentials.Extensions
             => HttpUtility.HtmlEncode(text)
                 .Replace("\r\n", Separators.HtmlNewLine)
                 .Replace("\r", Separators.HtmlNewLine)
-                .Replace("\n", Separators.HtmlNewLine);
+                .Replace("\n", Separators.HtmlNewLine)
+                .Replace(Environment.NewLine, Separators.HtmlNewLine);
 
         public static string RemoveTrailingSlash(this string url)
         {
@@ -198,5 +200,27 @@ namespace Cogworks.Essentials.Extensions
                 return false;
             }
         }
+
+        public static string HtmlDecode(this string input)
+            => input.HasValue()
+                ? System.Web.HttpUtility.HtmlDecode(input)
+                : string.Empty;
+
+        public static string RemoveMultipleSpaces(this string input)
+            => Regex.Replace(input, "[ ]{2,}", Separators.Space);
+
+        public static string ToBase64(this string plainText)
+            => Base64UrlEncoder.Encode(plainText);
+
+        public static string FromBase64(this string base64Encoded)
+            => Base64UrlEncoder.Decode(base64Encoded);
+
+        public static string RemoveNewLines(this string input)
+            => input.HasValue()
+                ? input
+                    .Replace("\n", string.Empty)
+                    .Replace("\r", string.Empty)
+                    .Replace(Environment.NewLine, string.Empty)
+                : string.Empty;
     }
 }
