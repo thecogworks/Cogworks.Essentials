@@ -1,4 +1,4 @@
-namespace Cogworks.Essentials.Constants.StringConstants
+﻿namespace Cogworks.Essentials.Constants.StringConstants
 {
     public static class SocialMediaConstants
     {

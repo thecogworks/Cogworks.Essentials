@@ -1,4 +1,4 @@
-namespace Cogworks.Essentials.Extensions
+﻿namespace Cogworks.Essentials.Extensions
 {
     public static class ObjectExtensions
     {
