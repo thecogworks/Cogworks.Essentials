@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-using Cogworks.Essentials.Constants.StringConstants;
+using Separators = Cogworks.Essentials.Constants.StringConstants.Separators;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Cogworks.Essentials.Extensions
