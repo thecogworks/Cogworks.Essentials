@@ -19,9 +19,9 @@ namespace Cogworks.Essentials.Extensions
 
         public static string JoinIfNotNull<TInput, TResult>(this IEnumerable<TInput> items, Func<TInput, TResult> func,
             string separator = Separators.Space)
-            => !items.HasAny()
-                ? string.Empty
-                : string.Join(separator, items.Select(func));
+            => items.HasAny()
+                ? string.Join(separator, items.Select(func))
+                : string.Empty;
 
         public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> items)
             => items.HasAny()
