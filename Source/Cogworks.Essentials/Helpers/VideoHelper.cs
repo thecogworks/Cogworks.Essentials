@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using Cogworks.Essentials.Constants.StringConstants;
 using Cogworks.Essentials.Enums;
 using Cogworks.Essentials.Extensions;
+using SocialMediaConstants = Cogworks.Essentials.Constants.StringConstants.SocialMediaConstants;
 
 namespace Cogworks.Essentials.Helpers
 {
