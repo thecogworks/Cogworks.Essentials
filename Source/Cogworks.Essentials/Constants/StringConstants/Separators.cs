@@ -13,5 +13,6 @@
         public const string Assign = ":=";
         public const string Vertical = "|";
         public const string Hyphen = "-";
+        public const string HtmlNewLine = "<br />";
     }
 }
