@@ -48,5 +48,60 @@ namespace Cogworks.Essentials.Extensions
                 .GroupBy(x => x.Index / chunkSize)
                 .Select(x => x.Select(v => v.Value).ToList())
                 .ToList();
+
+        public static IEnumerable<T> GetHierarchyPath<T>(this IEnumerable<T> items, Func<T, IEnumerable<T>> childSelector,
+            Func<T, bool> condition)
+        {
+            var path = new Stack<T>();
+
+            GetHierarchyPath(items, childSelector, condition, path);
+
+            return path.Reverse().ToList();
+        }
+
+        public static bool GetHierarchyPath<T>(this IEnumerable<T> items, Func<T, IEnumerable<T>> childSelector,
+            Func<T, bool> condition, Stack<T> path)
+        {
+            foreach (var item in items)
+            {
+                path.Push(item);
+
+                if (condition(item) || GetHierarchyPath(childSelector(item), childSelector, condition, path))
+                {
+                    return true;
+                }
+
+                path.Pop();
+            }
+
+            return false;
+        }
+
+        public static T RandomItem<T>(this IEnumerable<T> items)
+            where T : class
+        {
+            if (!items.HasAny())
+            {
+                return default;
+            }
+
+            var random = new Random();
+            var index = random.Next(0, items.Count());
+
+            return items.ElementAt(index);
+        }
+
+        public static T SequentialItem<T>(this IEnumerable<T> items, int currentIndex = -1)
+            where T : class
+        {
+            if (!items.HasAny())
+            {
+                return default;
+            }
+
+            var selectedIndex = (currentIndex + 1) % items.Count();
+
+            return items.ElementAt(selectedIndex);
+        }
     }
 }

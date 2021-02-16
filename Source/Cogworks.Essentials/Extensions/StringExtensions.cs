@@ -181,5 +181,22 @@ namespace Cogworks.Essentials.Extensions
                 ? url.Substring(0, url.Length - 1)
                 : url;
         }
+
+        public static bool IsValidEmail(this string email)
+        {
+            if (!email.HasValue())
+            {
+                return false;
+            }
+
+            try
+            {
+                return new System.Net.Mail.MailAddress(email).Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
