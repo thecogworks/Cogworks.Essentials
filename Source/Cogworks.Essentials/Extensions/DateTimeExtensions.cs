@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Cogworks.Essentials.Extensions
 {
-    public static class DateTimeExtension
+    public static class DateTimeExtensions
     {
         public static int GetUnixTimeStamp(this DateTime date)
             => (int)date.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
