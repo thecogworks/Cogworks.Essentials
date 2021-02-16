@@ -209,9 +209,11 @@ Source/**/local
 Source/*.Web/[Mm]edia/
 
 # Other
+# Other
 Source/.vs
 ood.flag
-Frontend/dist/
 appsettings.json
-
+Source/.editorconfig
 !**/*.json
+
+Source/**/*GeneratedMSBuildEditorConfig.editorconfig
