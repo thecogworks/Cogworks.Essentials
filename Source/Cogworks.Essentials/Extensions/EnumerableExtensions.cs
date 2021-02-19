@@ -14,14 +14,30 @@ namespace Cogworks.Essentials.Extensions
         public static bool HasAny<T>(this IEnumerable<T> items)
             => items != null && items.GetEnumerator().MoveNext();
 
-        public static TOutput FirstOrDefaultOfType<TInput, TOutput>(this IEnumerable publishedContents)
-            => publishedContents.OfType<TOutput>().FirstOrDefault();
+        public static TOutput FirstOrDefaultOfType<TOutput>(this IEnumerable items)
+            => items.OfType<TOutput>().FirstOrDefault();
+
+        public static TOutput FirstOrDefaultOfType<TInput, TOutput>(this IEnumerable<TInput> items)
+            => items.OfType<TOutput>().FirstOrDefault();
 
         public static string JoinIfNotNull<TInput, TResult>(this IEnumerable<TInput> items, Func<TInput, TResult> func,
             string separator = Separators.Space)
             => items.HasAny()
                 ? string.Join(separator, items.Select(func))
                 : string.Empty;
+
+        public static IEnumerable<T> IntersectManyWithHash<T>(this IEnumerable<IEnumerable<T>> values)
+            => !values.Any()
+                ? Enumerable.Empty<T>()
+                : values
+                    .Skip(1)
+                    .Aggregate(
+                        new HashSet<T>(values.First()),
+                        (h, e) =>
+                        {
+                            h.IntersectWith(e);
+                            return h;
+                        });
 
         public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> items)
             => items.HasAny()
