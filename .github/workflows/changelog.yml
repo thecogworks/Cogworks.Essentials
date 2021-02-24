@@ -70,3 +70,11 @@ jobs:
       run: |
         git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" master
         git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" ${{ env.branch }}:master
+
+    - name: Notify on tags updated
+      run: |
+        git checkout master
+        git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" master
+
+        git checkout -b tags-updated
+        git push -u origin tags-updated
