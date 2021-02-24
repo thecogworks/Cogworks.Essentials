@@ -34,6 +34,7 @@ jobs:
           echo "branch=$((git branch -a --contains $(git rev-list -n 1 $GITHUB_REF) | sed 's/remotes\/origin\///' | sed 's/release\/.*//' | sed 's/master//' | sed 's/* //' | sed -r '/^\s*$/d' | grep release | head -1)" >> $GITHUB_ENV
 
         elif [[ $(git branch -a --contains $(git rev-list -n 1 $GITHUB_REF) | sed 's/remotes\/origin\///' | sed 's/release\/.*//' | sed 's/develop//' | sed 's/* //' | sed -r '/^\s*$/d' | grep master | head -1) ]]; then
+        fi
         else
           exit 1
         fi
