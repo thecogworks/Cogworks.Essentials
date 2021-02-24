@@ -1,4 +1,4 @@
-name: Changelog generator and GitFlow actions
+name: Changelog generator
 
 on:
   push:
@@ -71,10 +71,16 @@ jobs:
         git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" master
         git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" ${{ env.branch }}:master
 
-    - name: Notify on tags updated
+    - name: Checkout master
       run: |
         git checkout master
         git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" master
 
+    - name: Notify on tags updated
+      run: |
         git checkout -b tags-updated
         git push -u origin tags-updated
+
+    - name: Generate GitHub release notes
+      run: |
+        npm run github-release
