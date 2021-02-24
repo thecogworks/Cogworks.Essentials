@@ -1,0 +1,72 @@
+name: Changelog generator and GitFlow actions
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  changelog_generator:
+    name: Changelog Generator
+    runs-on: ubuntu-latest
+    env:
+      branch: master
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set local user
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+
+    - name: Checkout master
+      run: |
+        git checkout master
+        git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" master
+
+    - name: Checkout branch tag branch
+      run: |
+        if [[ $(git branch -a --contains $(git rev-list -n 1 $GITHUB_REF) | sed 's/remotes\/origin\///' | sed 's/release\/.*//' | sed 's/master//' | sed 's/* //' | sed -r '/^\s*$/d' | grep release | head -1) ]]; then
+
+          echo "branch=$((git branch -a --contains $(git rev-list -n 1 $GITHUB_REF) | sed 's/remotes\/origin\///' | sed 's/release\/.*//' | sed 's/master//' | sed 's/* //' | sed -r '/^\s*$/d' | grep release | head -1)" >> $GITHUB_ENV
+
+        elif [[ $(git branch -a --contains $(git rev-list -n 1 $GITHUB_REF) | sed 's/remotes\/origin\///' | sed 's/release\/.*//' | sed 's/develop//' | sed 's/* //' | sed -r '/^\s*$/d' | grep master | head -1) ]]; then
+        else
+          exit 1
+        fi
+
+        echo "Branch: ${{ env.branch }}"
+        git checkout ${{ env.branch }}
+
+    - name: Check the tag
+      run: |
+        git describe --exact-match `git rev-parse HEAD`
+
+    - name: Get tag
+      run: |
+        echo "tag=$(git describe --exact-match `git rev-parse HEAD`)" >> $GITHUB_ENV
+
+    - name: Install dependencies
+      run: |
+        rm -rf node_modules
+        npm install
+
+    - name: Generate changelog and update npm version
+      run: |
+        npm run release
+
+    - name: Remove tag
+      run: |
+        git tag -d ${{ env.tag }}
+
+    - name: Updating tags
+      run: |
+        git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" master
+        git tag -a ${{ env.tag }} -m "${{ env.tag }}"
+        git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tag -f
+
+    - name: Pushing latest changes to master
+      run: |
+        git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" master
+        git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" ${{ env.branch }}:master
