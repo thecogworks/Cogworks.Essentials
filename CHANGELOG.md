@@ -1,3 +1,13 @@
+<a name="0.0.17"></a>
+## [0.0.17](https://github.com/thecogworks/cog-essentials/compare/0.0.16...0.0.17) (2021-02-25)
+
+
+### Bug Fixes
+
+* nuget restor ([f7f1c5b](https://github.com/thecogworks/cog-essentials/commit/f7f1c5b))
+
+
+
 <a name="0.0.16"></a>
 ## [0.0.16](https://github.com/thecogworks/cog-essentials/compare/0.0.15...0.0.16) (2021-02-25)
 
