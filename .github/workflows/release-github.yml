@@ -84,7 +84,7 @@ jobs:
         shell: bash
         working-directory: ${{ github.workspace }}
         run: |
-          for f in ./Source/../${{ env.NUGET_OUTPUT }}/*.nupkg
+          for f in ./.${{ env.NUGET_OUTPUT }}/*.nupkg
           do
             curl -vX PUT -u "$GITHUB_USER:$GITHUB_TOKEN" -F package=@$f $GITHUB_FEED
           done
