@@ -1,3 +1,13 @@
+<a name="0.0.13"></a>
+## [0.0.13](https://github.com/thecogworks/cog-essentials/compare/0.0.12...0.0.13) (2021-02-25)
+
+
+### Features
+
+* added nuspec ([1164619](https://github.com/thecogworks/cog-essentials/commit/1164619))
+
+
+
 <a name="0.0.12"></a>
 ## [0.0.12](https://github.com/thecogworks/cog-essentials/compare/0.0.11...0.0.12) (2021-02-25)
 
