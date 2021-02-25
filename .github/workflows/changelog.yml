@@ -22,30 +22,22 @@ jobs:
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
 
-    - name: Checkout master
-      run: |
-        git checkout master
-        git pull "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" master
-
     - name: Checkout branch tag branch
       run: |
-        if [[ $(git branch -a --contains $(git rev-list -n 1 $GITHUB_REF) | sed 's/remotes\/origin\///' | sed 's/release\/.*//' | sed 's/master//' | sed 's/* //' | sed -r '/^\s*$/d' | grep release | head -1) ]]; then
+        branch_check=$(git branch -a --contains $(git rev-parse refs/tags/0.0.5~0) | sed 's/remotes\/origin\///' | sed 's/develop//' | sed 's/master//' | sed 's/* //' | sed -r '/^\s*$/d' | head -1)
 
-          echo "branch=$(git branch -a --contains $(git rev-list -n 1 $GITHUB_REF) | sed 's/remotes\/origin\///' | sed 's/release\/.*//' | sed 's/master//' | sed 's/* //' | sed -r '/^\s*$/d' | grep release | head -1)" >> $GITHUB_ENV
-
-        elif [[ ! $(git branch -a --contains $(git rev-list -n 1 $GITHUB_REF) | sed 's/remotes\/origin\///' | sed 's/release\/.*//' | sed 's/develop//' | sed 's/* //' | sed -r '/^\s*$/d' | grep master | head -1) ]]; then
+        if [[ $branch_check != "release" || $branch_check != "master" ]]; then
           exit 1
         fi
+
+        echo "branch=$(branch_check)" >> $GITHUB_ENV
 
         echo "Branch: ${{ env.branch }}"
         git checkout ${{ env.branch }}
 
-    - name: Check the tag
-      run: |
-        git describe --exact-match `git rev-parse HEAD`
-
     - name: Get tag
       run: |
+        git describe --exact-match `git rev-parse HEAD`
         echo "tag=$(git describe --exact-match `git rev-parse HEAD`)" >> $GITHUB_ENV
 
     - name: Install dependencies
