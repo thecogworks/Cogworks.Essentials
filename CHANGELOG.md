@@ -1,3 +1,13 @@
+<a name="0.0.21"></a>
+## [0.0.21](https://github.com/thecogworks/cog-essentials/compare/0.0.20...0.0.21) (2021-02-25)
+
+
+### Bug Fixes
+
+* nuget path location ([606560b](https://github.com/thecogworks/cog-essentials/commit/606560b))
+
+
+
 <a name="0.0.20"></a>
 ## [0.0.20](https://github.com/thecogworks/cog-essentials/compare/0.0.19...0.0.20) (2021-02-25)
 
