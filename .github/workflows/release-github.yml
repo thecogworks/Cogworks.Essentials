@@ -1,0 +1,81 @@
+name: GitHub Packages Release
+
+on:
+  workflow_run:
+    workflows: [ "Changelog generator" ]
+    types:
+      - completed
+jobs:
+  github_packages_release:
+    name: GitHub Packages Release
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: windows-latest
+    env:
+      # Dotnet Setup
+      DOTNET_VERSION: 3.1.401
+
+      # Stop wasting time caching packages
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+      # Disable sending usage data to Microsoft
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+      # Nuget Setup
+      NUGET_VERSION: 'latest'
+      NUGET_OUTPUT: output
+
+      # Solution Setup
+      CONFIG: 'Release'
+      SOLUTION: 'Source\*.sln'
+
+      # GitHub Packages Feed settings
+      GITHUB_USER: thecogworks
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_FEED: https://nuget.pkg.github.com/thecogworks
+
+    steps:
+      - name: Checkout commit
+        uses: actions/checkout@v2
+        with:
+            ref: master
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - uses: nuget/setup-nuget@v1
+        with:
+          nuget-version: ${{ env.NUGET_VERSION }}
+
+      - name: NuGet Restore
+        run: nuget restore ${{ env.SOLUTION }}
+
+      - name: Install dependencies
+        run: dotnet restore ${{env.SOLUTION}}
+
+      - name: Build
+        working-directory: ${{ github.workspace }}
+        run: |
+          dotnet build \
+           --configuration ${{ env.CONFIG }} \
+           ${{ env.SOLUTION }}
+
+      - name: Pack all nuspec files
+        shell: bash
+        run: |
+          for nuspecFile in ./Source/**/*.nuspec
+          do
+            nuget pack $nuspecFile \
+             -Version ${{ env.VERSION }} \
+             -Properties Configuration=${{ env.CONFIG }} \
+             -OutputDirectory .\${{ env.NUGET_OUTPUT }}
+          done
+
+      - name: Push to GitHub Feed
+        shell: bash
+        run: |
+          for f in ./${{ env.NUGET_OUTPUT }}/*.nupkg
+          do
+            curl -vX PUT -u "$GITHUB_USER:$GITHUB_TOKEN" -F package=@$f $GITHUB_FEED
+          done
