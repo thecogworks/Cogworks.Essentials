@@ -3,7 +3,7 @@ name: GitFlow actions
 on:
   push:
     branches:
-      - "tags-updated"
+      - 'tags-updated'
 
 jobs:
   gitflow:
