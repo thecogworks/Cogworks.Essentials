@@ -28,7 +28,8 @@ jobs:
 
         echo $branch_check
 
-        if [[ $branch_check != "release" || $branch_check != "master" ]]; then
+        if [[ $branch_check =~ ^(release|master)$ ]]; then
+          echo "Not correct branch. Allowed branches release and master."
           exit 1
         fi
 
