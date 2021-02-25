@@ -25,7 +25,7 @@ jobs:
 
     - name: Get tag branch
       run: |
-        branch_check=$(git branch -r --contains $(git rev-parse $GITHUB_REF~0) | sed 's/remotes\/origin\///' | sed 's/origin\///' | sed 's/develop//' | sed 's/master//' | sed 's/* //' | sed -r '/^\s*$/d' | head -1)
+        branch_check=$(git branch -r --contains $(git rev-parse $GITHUB_REF~0) | sed 's/remotes\/origin\///' | sed 's/origin\///' | sed 's/develop//' | sed 's/* //' | sed -r '/^\s*$/d' | head -1)
 
         echo $branch_check
 
