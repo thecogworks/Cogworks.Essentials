@@ -1,3 +1,13 @@
+<a name="0.0.12"></a>
+## [0.0.12](https://github.com/thecogworks/cog-essentials/compare/0.0.11...0.0.12) (2021-02-25)
+
+
+### Features
+
+* added github packages release ([0dedb34](https://github.com/thecogworks/cog-essentials/commit/0dedb34))
+
+
+
 <a name="0.0.11"></a>
 ## [0.0.11](https://github.com/thecogworks/cog-essentials/compare/0.0.10...0.0.11) (2021-02-25)
 
