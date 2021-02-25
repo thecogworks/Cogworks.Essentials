@@ -1,3 +1,13 @@
+<a name="0.0.23"></a>
+## [0.0.23](https://github.com/thecogworks/cog-essentials/compare/0.0.22...0.0.23) (2021-02-25)
+
+
+### Bug Fixes
+
+* fixed typo in nuget output path ([85ca43c](https://github.com/thecogworks/cog-essentials/commit/85ca43c))
+
+
+
 <a name="0.0.22"></a>
 ## [0.0.22](https://github.com/thecogworks/cog-essentials/compare/0.0.21...0.0.22) (2021-02-25)
 
