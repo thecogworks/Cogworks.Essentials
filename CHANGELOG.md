@@ -1,3 +1,13 @@
+<a name="0.0.20"></a>
+## [0.0.20](https://github.com/thecogworks/cog-essentials/compare/0.0.19...0.0.20) (2021-02-25)
+
+
+### Bug Fixes
+
+* fixed pack location ([75e2068](https://github.com/thecogworks/cog-essentials/commit/75e2068))
+
+
+
 <a name="0.0.19"></a>
 ## [0.0.19](https://github.com/thecogworks/cog-essentials/compare/0.0.18...0.0.19) (2021-02-25)
 
