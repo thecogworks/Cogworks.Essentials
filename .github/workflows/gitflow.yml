@@ -7,7 +7,6 @@ on:
       - completed
 jobs:
   gitflow:
-      needs: [changelog_generator]
       runs-on: ubuntu-latest
 
       steps:
