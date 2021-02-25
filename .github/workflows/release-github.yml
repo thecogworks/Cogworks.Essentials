@@ -70,8 +70,9 @@ jobs:
 
       - name: Pack all nuspec files
         shell: bash
+        working-directory: ${{ github.workspace }}
         run: |
-          for nuspecFile in ./${{NUGET_OUTPUT}}/**/*.nuspec
+          for nuspecFile in ./Source/**/*.nuspec
           do
             nuget pack $nuspecFile \
              -Version ${{ env.VERSION }} \
@@ -81,6 +82,7 @@ jobs:
 
       - name: Push to GitHub Feed
         shell: bash
+        working-directory: ${{ github.workspace }}
         run: |
           for f in ./${{ env.NUGET_OUTPUT }}/*.nupkg
           do
