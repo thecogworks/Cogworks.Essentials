@@ -1,3 +1,13 @@
+<a name="0.0.8"></a>
+## [0.0.8](https://github.com/thecogworks/cog-essentials/compare/0.0.7...0.0.8) (2021-02-25)
+
+
+### Features
+
+* trigger gitflow after changelog workflow ([170f021](https://github.com/thecogworks/cog-essentials/commit/170f021))
+
+
+
 <a name="0.0.7"></a>
 ## [0.0.7](https://github.com/thecogworks/cog-essentials/compare/212309b...0.0.7) (2021-02-25)
 
