@@ -71,7 +71,7 @@ jobs:
       - name: Pack all nuspec files
         shell: bash
         run: |
-          for nuspecFile in ./Source/**/*.nuspec
+          for nuspecFile in ./${{NUGET_OUTPUT}}/**/*.nuspec
           do
             nuget pack $nuspecFile \
              -Version ${{ env.VERSION }} \
