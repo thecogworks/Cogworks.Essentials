@@ -33,7 +33,7 @@ jobs:
           exit 1
         fi
 
-        echo "branch=$(branch_check)" >> $GITHUB_ENV
+        echo "branch=$branch_check" >> $GITHUB_ENV
 
         echo "Branch: ${{ env.branch }}"
         git checkout ${{ env.branch }}
