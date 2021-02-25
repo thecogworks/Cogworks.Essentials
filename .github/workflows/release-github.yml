@@ -1,4 +1,4 @@
-name: GitHub Packages Release
+name: (NuGet) GitHub Packages Release
 
 on:
   workflow_run:
@@ -38,7 +38,8 @@ jobs:
       - name: Checkout commit
         uses: actions/checkout@v2
         with:
-            ref: master
+          ref: master
+          fetch-depth: 0
 
       - name: Get version
         run: |
