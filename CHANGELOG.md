@@ -1,3 +1,14 @@
+<a name="0.0.11"></a>
+## [0.0.11](https://github.com/thecogworks/cog-essentials/compare/0.0.10...0.0.11) (2021-02-25)
+
+
+### Bug Fixes
+
+* fixed github releaser generation ([1db31d6](https://github.com/thecogworks/cog-essentials/commit/1db31d6))
+* fixed removing branch ([4319bc6](https://github.com/thecogworks/cog-essentials/commit/4319bc6))
+
+
+
 <a name="0.0.10"></a>
 ## [0.0.10](https://github.com/thecogworks/cog-essentials/compare/0.0.9...0.0.10) (2021-02-25)
 
