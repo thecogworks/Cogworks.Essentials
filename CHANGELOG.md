@@ -1,20 +1,17 @@
-<a name="0.0.6"></a>
-## [0.0.6](https://github.com/thecogworks/cog-essentials/compare/0.0.5...0.0.6) (2021-02-25)
-
-
-
-<a name="0.0.5"></a>
-## [0.0.5](https://github.com/thecogworks/cog-essentials/compare/212309b...0.0.5) (2021-02-25)
+<a name="0.0.7"></a>
+## [0.0.7](https://github.com/thecogworks/cog-essentials/compare/212309b...0.0.7) (2021-02-25)
 
 
 ### Bug Fixes
 
+* added github releaser token ([ff7fadc](https://github.com/thecogworks/cog-essentials/commit/ff7fadc))
 * checkout to selected branch ([7562fa1](https://github.com/thecogworks/cog-essentials/commit/7562fa1))
 * fetching all branches ([2b6676e](https://github.com/thecogworks/cog-essentials/commit/2b6676e))
 * fixed branch condition ([580ae74](https://github.com/thecogworks/cog-essentials/commit/580ae74))
 * fixed getting tag branch ([21c4a68](https://github.com/thecogworks/cog-essentials/commit/21c4a68))
 * fixed not closed if statement ([7dd98d9](https://github.com/thecogworks/cog-essentials/commit/7dd98d9))
 * fixed saving env variable ([23ff488](https://github.com/thecogworks/cog-essentials/commit/23ff488))
+* fixed trigger gitflow ([f0a5f34](https://github.com/thecogworks/cog-essentials/commit/f0a5f34))
 
 
 ### Features
