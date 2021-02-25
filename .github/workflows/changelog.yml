@@ -22,7 +22,7 @@ jobs:
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
 
-    - name: Checkout branch tag branch
+    - name: Get tag branch
       run: |
         branch_check=$(git branch -r --contains $(git rev-parse $GITHUB_REF~0) | sed 's/remotes\/origin\///' | sed 's/origin\///' | sed 's/develop//' | sed 's/master//' | sed 's/* //' | sed -r '/^\s*$/d' | head -1)
 
@@ -35,8 +35,11 @@ jobs:
 
         echo "branch=$branch_check" >> $GITHUB_ENV
 
-        echo "Branch: $branch_check"
-        git checkout $branch_check
+    - uses: actions/checkout@v2
+      name: Checkout tag branch
+      with:
+        fetch-depth: 0
+        ref: ${{ env.branch }}
 
     - name: Get tag
       run: |
