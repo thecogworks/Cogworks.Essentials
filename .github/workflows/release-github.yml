@@ -63,11 +63,9 @@ jobs:
         run: dotnet restore ${{env.SOLUTION}}
 
       - name: Build
-        shell: bash
-        working-directory: ${{ github.workspace }}
         run: |
-          dotnet build \
-           --configuration ${{ env.CONFIG }} \
+          dotnet build `
+           --configuration ${{ env.CONFIG }} `
            ${{ env.SOLUTION }}
 
       - name: Pack all nuspec files
