@@ -9,8 +9,6 @@ jobs:
   gitflow:
       needs: [changelog_generator]
       runs-on: ubuntu-latest
-      outputs:
-        job_status: ${{ job.status }}
 
       steps:
         - uses: actions/checkout@v2
@@ -27,7 +25,8 @@ jobs:
 
         - name: Get latest tag
           run: |
-            echo "tag=$(git describe --exact-match `git rev-parse HEAD` | head -1)" >> $GITHUB_ENV
+            tag_check=$(git describe --exact-match `git rev-parse HEAD` | head -1)
+            echo "tag=$tag_check" >> $GITHUB_ENV
 
         - name: Clear release branch
           run: |
