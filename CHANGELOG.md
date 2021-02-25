@@ -1,3 +1,13 @@
+<a name="0.0.10"></a>
+## [0.0.10](https://github.com/thecogworks/cog-essentials/compare/0.0.9...0.0.10) (2021-02-25)
+
+
+### Bug Fixes
+
+* added condition for changelog complets successfully ([c6eed5a](https://github.com/thecogworks/cog-essentials/commit/c6eed5a))
+
+
+
 <a name="0.0.9"></a>
 ## [0.0.9](https://github.com/thecogworks/cog-essentials/compare/0.0.8...0.0.9) (2021-02-25)
 
