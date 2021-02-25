@@ -1,3 +1,13 @@
+<a name="0.0.18"></a>
+## [0.0.18](https://github.com/thecogworks/cog-essentials/compare/0.0.17...0.0.18) (2021-02-25)
+
+
+### Bug Fixes
+
+* fixed multiline command ([bf3bc8c](https://github.com/thecogworks/cog-essentials/commit/bf3bc8c))
+
+
+
 <a name="0.0.17"></a>
 ## [0.0.17](https://github.com/thecogworks/cog-essentials/compare/0.0.16...0.0.17) (2021-02-25)
 
