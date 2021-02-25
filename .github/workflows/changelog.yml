@@ -35,8 +35,8 @@ jobs:
 
         echo "branch=$branch_check" >> $GITHUB_ENV
 
-        echo "Branch: ${{ env.branch }}"
-        git checkout ${{ env.branch }}
+        echo "Branch: $branch_check"
+        git checkout $branch_check
 
     - name: Get tag
       run: |
