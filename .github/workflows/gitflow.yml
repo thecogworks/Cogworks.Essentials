@@ -28,8 +28,9 @@ jobs:
 
       - name: Clear release branch
         run: |
-          if [[ $(git branch -r | grep release/${{ env.tag }} | sed 's/* //' | sed -r '/^\s*$/d' | head -1) ]]; then
-            git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --delete $(git branch -r | grep release/${{ env.tag }} | sed 's/* //' | sed -r '/^\s*$/d' | head -1)
+          branch_check=$(git branch -r | grep release/${{ env.tag }} | sed 's/remotes\/origin\///' | sed 's/origin\///' | sed 's/* //' | sed -r '/^\s*$/d' | head -1)
+          if [[ $branch_check ]]; then
+            git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --delete $branch_check
           fi
 
       - name: Checkout develop and pull latest develop
@@ -50,8 +51,3 @@ jobs:
         if: success()
         run: |
           git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" develop:develop
-
-      - name: Cleaning
-        if: always()
-        run: |
-          git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --delete tags-updated
