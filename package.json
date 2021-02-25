@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "release": "npm version from-git && sleep 5 && conventional-changelog -p angular -i CHANGELOG.md -s -r 0 -n ./changelog.config.js && git add CHANGELOG.md && git commit -m \"docs(changelog): regenerate CHANGELOG.md [skip ci]\" ",
-    "github-release": "conventional-github-releaser -p angular -r 0"
+    "github-release": "sleep 5 && conventional-github-releaser -p angular -r 0"
   },
   "husky": {
     "hooks": {
