@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       branch: master
+      CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
     - uses: actions/checkout@v2
