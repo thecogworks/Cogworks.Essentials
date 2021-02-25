@@ -82,3 +82,4 @@ jobs:
     - name: Generate GitHub release notes
       run: |
         npm run github-release
+      continue-on-error: true
