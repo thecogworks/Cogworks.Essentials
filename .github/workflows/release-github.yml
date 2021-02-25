@@ -26,7 +26,7 @@ jobs:
 
       # Solution Setup
       CONFIG: 'Release'
-      SOLUTION: 'Source\*.sln'
+      SOLUTION: 'Source\Cogworks.Essentials.sln'
       VERSION: '1.0.0'
 
       # GitHub Packages Feed settings
