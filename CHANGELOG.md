@@ -1,3 +1,13 @@
+<a name="0.0.14"></a>
+## [0.0.14](https://github.com/thecogworks/cog-essentials/compare/0.0.13...0.0.14) (2021-02-25)
+
+
+### Bug Fixes
+
+* fetch all tags and branches ([8df0089](https://github.com/thecogworks/cog-essentials/commit/8df0089))
+
+
+
 <a name="0.0.13"></a>
 ## [0.0.13](https://github.com/thecogworks/cog-essentials/compare/0.0.12...0.0.13) (2021-02-25)
 
