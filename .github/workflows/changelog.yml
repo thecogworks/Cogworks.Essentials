@@ -40,6 +40,8 @@ jobs:
 
     - name: Get tag
       run: |
+        echo $(git describe)
+        echo $(git rev-parse $GITHUB_REF~0)
         tag_check=$(git describe --exact-match `git rev-parse $GITHUB_REF~0`)
         echo "tag=$tag_check" >> $GITHUB_ENV
 
