@@ -1,3 +1,13 @@
+<a name="0.0.9"></a>
+## [0.0.9](https://github.com/thecogworks/cog-essentials/compare/0.0.8...0.0.9) (2021-02-25)
+
+
+### Bug Fixes
+
+* remove gitflow depending job ([a754990](https://github.com/thecogworks/cog-essentials/commit/a754990))
+
+
+
 <a name="0.0.8"></a>
 ## [0.0.8](https://github.com/thecogworks/cog-essentials/compare/0.0.7...0.0.8) (2021-02-25)
 
