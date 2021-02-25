@@ -18,7 +18,7 @@
     <Rule Id="CA1016" Action="Error" />
     <Rule Id="CA1017" Action="Error" />
     <Rule Id="CA1019" Action="Error" />
-    <Rule Id="CA1021" Action="Error" />
+    <Rule Id="CA1021" Action="Info" />
     <Rule Id="CA1023" Action="Error" />
     <Rule Id="CA1024" Action="Error" />
     <Rule Id="CA1025" Action="Error" />
@@ -167,6 +167,9 @@
     <Rule Id="IDE0033" Action="None" />
     <Rule Id="IDE0033WithoutSuggestion" Action="None" />
     <Rule Id="IDE0055" Action="Error" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.NetAnalyzers" RuleNamespace="Microsoft.CodeAnalysis.NetAnalyzers">
+    <Rule Id="CA1021" Action="Info" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.VisualBasic" RuleNamespace="Microsoft.CodeAnalysis.VisualBasic">
     <Rule Id="AD0001" Action="None" />

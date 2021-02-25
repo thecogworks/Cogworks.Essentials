@@ -27,6 +27,7 @@ jobs:
       # Solution Setup
       CONFIG: 'Release'
       SOLUTION: 'Source\*.sln'
+      VERSION: '1.0.0'
 
       # GitHub Packages Feed settings
       GITHUB_USER: thecogworks
@@ -38,6 +39,11 @@ jobs:
         uses: actions/checkout@v2
         with:
             ref: master
+
+      - name: Get version
+        run: |
+          tag_check=$(git describe --exact-match `git rev-parse HEAD` | head -1)
+          echo "VERSION=$tag_check" >> $GITHUB_ENV
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1

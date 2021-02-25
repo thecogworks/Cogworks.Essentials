@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Cogworks.Essentials</id>
+    <version>$version$</version>
+    <title>Cogworks.Essentials</title>
+    <authors>Cogworks</authors>
+    <owners>Cogworks</owners>
+    <projectUrl>https://github.com/thecogworks/cog-essentials</projectUrl>
+    <repository type="git" url="https://github.com/thecogworks/cog-essentials" />
+    <license type="expression">MIT</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>BE universal essentials (.NET Standard).</description>
+    <copyright>The Cogworks Limited 2021</copyright>
+    <tags>Essentials, Cogworks, dotnet, net, csharp, backend</tags>
+  </metadata>
+  <files>
+    <file src="bin\Release\**\Cogworks.Essentials.dll" target="lib" />
+  </files>
+</package>
