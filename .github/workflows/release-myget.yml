@@ -32,7 +32,7 @@ jobs:
       # MyGet Feed settings
       MYGET_USER: thecogworks
       MYGET_TOKEN: ${{ secrets.MYGET_TOKEN }}
-      MYGET_FEED: https://www.myget.org/F/cogworks-packages/api/v3/index.json
+      MYGET_FEED: https://www.myget.org/F/cogworks-packages/auth/${{ env.MYGET_TOKEN }}/api/v3/index.json
 
     steps:
       - name: Checkout commit
