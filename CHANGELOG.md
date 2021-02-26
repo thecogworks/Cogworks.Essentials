@@ -1,3 +1,13 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/thecogworks/cog-essentials/compare/1.0.0...1.0.1) (2021-02-26)
+
+
+### Features
+
+* added our umbraco workflow ([f554c61](https://github.com/thecogworks/cog-essentials/commit/f554c61))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/thecogworks/cog-essentials/compare/0.1.4...1.0.0) (2021-02-26)
 
