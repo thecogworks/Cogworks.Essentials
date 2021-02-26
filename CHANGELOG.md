@@ -1,3 +1,13 @@
+<a name="0.1.3"></a>
+## [0.1.3](https://github.com/thecogworks/cog-essentials/compare/0.1.2...0.1.3) (2021-02-26)
+
+
+### Bug Fixes
+
+* fixed issue with providing myget feed token ([b79e2bc](https://github.com/thecogworks/cog-essentials/commit/b79e2bc))
+
+
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/thecogworks/cog-essentials/compare/0.1.1...0.1.2) (2021-02-26)
 
