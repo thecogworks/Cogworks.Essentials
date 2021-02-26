@@ -86,5 +86,5 @@ jobs:
         run: |
           for nugetFile in ./.${{ env.NUGET_OUTPUT }}/*.nupkg
           do
-            nuget push @$nugetFile ${{ env.MYGET_TOKEN }} -Source ${{ env.MYGET_FEED }}
+            nuget push $nugetFile ${{ env.MYGET_TOKEN }} -Source ${{ env.MYGET_FEED }}
           done
