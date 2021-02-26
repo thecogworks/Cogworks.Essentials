@@ -1,3 +1,13 @@
+<a name="0.1.2"></a>
+## [0.1.2](https://github.com/thecogworks/cog-essentials/compare/0.1.1...0.1.2) (2021-02-26)
+
+
+### Bug Fixes
+
+* changed myget feed ([9007c1f](https://github.com/thecogworks/cog-essentials/commit/9007c1f))
+
+
+
 <a name="0.1.1"></a>
 ## [0.1.1](https://github.com/thecogworks/cog-essentials/compare/0.1.0...0.1.1) (2021-02-26)
 
