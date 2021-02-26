@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "cogworks-essentials",
   "code": "cog-essentials",
   "description": "BE universal essentials (.NET Standard).",
