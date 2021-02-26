@@ -1,3 +1,13 @@
+<a name="0.1.4"></a>
+## [0.1.4](https://github.com/thecogworks/cog-essentials/compare/0.1.3...0.1.4) (2021-02-26)
+
+
+### Bug Fixes
+
+* removed typo ([9f1a6fb](https://github.com/thecogworks/cog-essentials/commit/9f1a6fb))
+
+
+
 <a name="0.1.3"></a>
 ## [0.1.3](https://github.com/thecogworks/cog-essentials/compare/0.1.2...0.1.3) (2021-02-26)
 
