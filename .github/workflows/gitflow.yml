@@ -1,4 +1,4 @@
-name: GitFlow actions
+name: Git Flow
 
 on:
   workflow_run:
@@ -8,6 +8,7 @@ on:
 jobs:
   gitflow:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Git Flow
     runs-on: ubuntu-latest
 
     steps:
