@@ -17,6 +17,10 @@ jobs:
       GITHUB_FEED: https://nuget.pkg.github.com/thecogworks
       GITHUB_PACKAGES_OUTPUT: ${{ github.workspace }}/github_packages
 
+      # Project Setup
+      PROJECT_NAME: 'Cogworks.Essentials'
+      TEST: ${{ github.event_name }}
+
     steps:
       - name: Checkout master
         uses: actions/checkout@v2

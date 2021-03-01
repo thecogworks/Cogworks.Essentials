@@ -15,8 +15,8 @@ jobs:
       NUGET_VERSION: 'latest'
       NUGET_OUTPUT: ${{ github.workspace }}/my_get
 
-      # Solution Setup
-      VERSION: '1.0.0'
+      # Project Setup
+      PROJECT_NAME: 'Cogworks.Essentials'
 
       # MyGet Feed settings
       MYGET_TOKEN: ${{ secrets.MYGET_TOKEN }}
