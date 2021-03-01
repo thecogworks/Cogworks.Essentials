@@ -39,12 +39,13 @@ jobs:
           nuget-version: ${{ env.NUGET_VERSION }}
 
       - name: Download a single artifact
-        uses: actions/download-artifact@v2
+        uses: dawidd6/action-download-artifact@v2
         with:
+          workflow: build.yml
           name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
-          path: ${{ env.NUGET_OUTPUT }}
+          path: ${{ env.GITHUB_PACKAGES_OUTPUT }}
 
-      - name: Extract artifact
+      - name: Extract NuGet file
         shell: powershell
         run: |
           Install-Package -Name ${{ env.PROJECT_NAME }} -Source ${{ env.NUGET_OUTPUT }} -Destination ${{ env.NUGET_EXTRACTED }}

@@ -3,9 +3,10 @@ name: Build
 on:
   pull_request:
     branches: [ main, master, develop ]
-  release:
+  workflow_run:
+    workflows: [ "Changelog generator" ]
     types:
-      - published
+      - completed
   workflow_dispatch:
 
 jobs:

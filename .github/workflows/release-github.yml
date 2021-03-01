@@ -19,7 +19,6 @@ jobs:
 
       # Project Setup
       PROJECT_NAME: 'Cogworks.Essentials'
-      TEST: ${{ github.event_name }}
 
     steps:
       - name: Checkout master
@@ -35,8 +34,9 @@ jobs:
           echo "VERSION=$tag_check" >> $GITHUB_ENV
 
       - name: Download a single artifact
-        uses: actions/download-artifact@v2
+        uses: dawidd6/action-download-artifact@v2
         with:
+          workflow: build.yml
           name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
           path: ${{ env.GITHUB_PACKAGES_OUTPUT }}
 

@@ -36,10 +36,11 @@ jobs:
           echo "VERSION=$tag_check" >> $GITHUB_ENV
 
       - name: Download a single artifact
-        uses: actions/download-artifact@v2
+        uses: dawidd6/action-download-artifact@v2
         with:
+          workflow: build.yml
           name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
-          path: ${{ env.NUGET_OUTPUT }}
+          path: ${{ env.GITHUB_PACKAGES_OUTPUT }}
 
       - name: Configure NuGet
         uses: nuget/setup-nuget@v1
