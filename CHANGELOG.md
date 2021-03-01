@@ -1,16 +1,21 @@
+<a name="1.0.6"></a>
+## [1.0.6](https://github.com/thecogworks/cog-essentials/compare/1.0.5...1.0.6) (2021-03-01)
+
+
+
+<a name="1.0.5"></a>
+## [1.0.5](https://github.com/thecogworks/cog-essentials/compare/1.0.3...1.0.5) (2021-03-01)
+
+
+
 <a name="1.0.3"></a>
-## [1.0.3](https://github.com/thecogworks/cog-essentials/compare/1.0.2...1.0.3) (2021-03-01)
+## [1.0.3](https://github.com/thecogworks/cog-essentials/compare/1.0.1...1.0.3) (2021-03-01)
 
 
 ### Bug Fixes
 
 * fixed build trigger ([b86f756](https://github.com/thecogworks/cog-essentials/commit/b86f756))
 * fixed release env names ([2b5b6c3](https://github.com/thecogworks/cog-essentials/commit/2b5b6c3))
-
-
-
-<a name="1.0.2"></a>
-## [1.0.2](https://github.com/thecogworks/cog-essentials/compare/1.0.1...1.0.2) (2021-03-01)
 
 
 ### Features
