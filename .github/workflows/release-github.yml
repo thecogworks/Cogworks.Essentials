@@ -19,6 +19,7 @@ jobs:
 
       # Project Setup
       PROJECT_NAME: 'Cogworks.Essentials'
+      TEST: ${{ github.event_name }}
 
     steps:
       - name: Checkout master
