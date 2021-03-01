@@ -2,37 +2,27 @@ name: (Umbraco) Our.Umbraco Package Generation
 
 on:
   workflow_run:
-    workflows: [ "Changelog generator" ]
+    workflows: [ "Build" ]
     types:
       - completed
 jobs:
   our_umbraco:
     name: Our.Umbraco Package Generation
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event_name != 'pull_request' }}
     runs-on: windows-latest
     env:
-      # Dotnet Setup
-      DOTNET_VERSION: 3.1.401
-
-      # Stop wasting time caching packages
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-
-      # Disable sending usage data to Microsoft
-      DOTNET_CLI_TELEMETRY_OPTOUT: true
-
       # Nuget Setup
       NUGET_VERSION: 'latest'
-      NUGET_OUTPUT: output
+      NUGET_OUTPUT: './.output/nuget/'
+      NUGET_EXTRACTED: './.output/nuget/extracted/'
 
-      # Solution Setup
-      CONFIG: 'Release'
-      SOLUTION: 'Source\Cogworks.Essentials.sln'
-      PACKAGE_NAME: 'Cogworks.Essentials'
+      # Project Setup
       VERSION: '1.0.0'
-      UMBRACO_OUTPUT: '.output/umbraco'
+      PACKAGE_NAME: 'Cogworks.Essentials'
+      UMBRACO_OUTPUT: './.output/umbraco/'
 
     steps:
-      - name: Checkout commit
+      - name: Checkout master
         uses: actions/checkout@v2
         with:
           ref: master
@@ -44,38 +34,34 @@ jobs:
           tag_check=$(git describe --exact-match `git rev-parse HEAD` | head -1)
           echo "VERSION=$tag_check" >> $GITHUB_ENV
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-
-      - uses: nuget/setup-nuget@v1
+      - name: Configure NuGet
+        uses: nuget/setup-nuget@v1
         with:
           nuget-version: ${{ env.NUGET_VERSION }}
 
-      - name: NuGet Restore
-        run: nuget restore ${{ env.SOLUTION }}
+      - name: Download a single artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
+          path: ${{ env.NUGET_OUTPUT }}
 
-      - name: Install dependencies
-        run: dotnet restore ${{env.SOLUTION}}
-
-      - name: Build
+      - name: Extract artifact
+        shell: powershell
         run: |
-          dotnet build `
-           --configuration ${{ env.CONFIG }} `
-           ${{ env.SOLUTION }}
+          Install-Package -Name ${{ env.PACKAGE_NAME }} -Source ${{ env.NUGET_OUTPUT }} -Destination ${{ env.NUGET_EXTRACTED }}
 
       - name: Copy package files
         shell: bash
         run: |
-          mkdir -p ./${{ env.UMBRACO_OUTPUT }}/ && find . -type d -regex ".*/${{ env.PACKAGE_NAME }}/bin/${{ env.CONFIG }}" -print0 | find $(xargs -0) -name "${{ env.PACKAGE_NAME }}*.dll" -print0 | xargs -0 -I {} cp -r {} ./${{ env.UMBRACO_OUTPUT }}/
 
-          mkdir -p ./${{ env.UMBRACO_OUTPUT }}/ && find . -type d -regex ".*/${{ env.PACKAGE_NAME }}/Web/UI" -print0 | xargs -0 -I {} cp -r {} ./${{ env.UMBRACO_OUTPUT }}/
+          mkdir -p ${{ env.UMBRACO_OUTPUT }} && find ${{ env.NUGET_EXTRACTED }} -name "*.dll" -print0 | xargs -0 -I {} cp -r {} ${{ env.UMBRACO_OUTPUT }}
 
-          is_empty_directory=$([ "$(ls -A ./${{ env.UMBRACO_OUTPUT }}/)" ] && echo false || echo true)
+          mkdir -p ${{ env.UMBRACO_OUTPUT }} && find . -type d -regex ".*/${{ env.PACKAGE_NAME }}.${{ env.VERSION }}/.*App_Plugins" -print0 |  xargs -0 -I {} cp -r {} ${{ env.UMBRACO_OUTPUT }}
+
+          is_empty_directory=$([ "$(ls -A ${{ env.UMBRACO_OUTPUT }})" ] && echo false || echo true)
 
           if [[ is_empty_directory == true ]]; then
-            echo "Empty output directory: ./${{ env.UMBRACO_OUTPUT }}/"
+            echo "Empty output directory: ${{ env.UMBRACO_OUTPUT }}"
             exit 1
           fi
 
@@ -83,4 +69,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.PACKAGE_NAME }}.${{ env.VERSION }}
-          path: ./${{ env.UMBRACO_OUTPUT }}/
+          path: ${{ env.UMBRACO_OUTPUT }}

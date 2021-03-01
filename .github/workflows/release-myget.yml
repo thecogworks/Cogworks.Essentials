@@ -2,40 +2,28 @@ name: (NuGet) MyGet Release
 
 on:
   workflow_run:
-    workflows: [ "Changelog generator" ]
+    workflows: [ "Build" ]
     types:
       - completed
 jobs:
   myget_release:
     name: MyGet Release
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event_name != 'pull_request' }}
     runs-on: windows-latest
     env:
-      # Dotnet Setup
-      DOTNET_VERSION: 3.1.401
-
-      # Stop wasting time caching packages
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-
-      # Disable sending usage data to Microsoft
-      DOTNET_CLI_TELEMETRY_OPTOUT: true
-
       # Nuget Setup
       NUGET_VERSION: 'latest'
-      NUGET_OUTPUT: output
+      NUGET_OUTPUT: ${{ github.workspace }}/my_get
 
       # Solution Setup
-      CONFIG: 'Release'
-      SOLUTION: 'Source\Cogworks.Essentials.sln'
       VERSION: '1.0.0'
 
       # MyGet Feed settings
-      MYGET_USER: thecogworks
       MYGET_TOKEN: ${{ secrets.MYGET_TOKEN }}
       MYGET_FEED: https://www.myget.org/F/cogworks-packages/auth/${{ secrets.MYGET_TOKEN }}/api/v3/index.json
 
     steps:
-      - name: Checkout commit
+      - name: Checkout master
         uses: actions/checkout@v2
         with:
           ref: master
@@ -47,44 +35,22 @@ jobs:
           tag_check=$(git describe --exact-match `git rev-parse HEAD` | head -1)
           echo "VERSION=$tag_check" >> $GITHUB_ENV
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+      - name: Download a single artifact
+        uses: actions/download-artifact@v2
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
+          path: ${{ env.NUGET_OUTPUT }}
 
-      - uses: nuget/setup-nuget@v1
+      - name: Configure NuGet
+        uses: nuget/setup-nuget@v1
         with:
           nuget-version: ${{ env.NUGET_VERSION }}
 
-      - name: NuGet Restore
-        run: nuget restore ${{ env.SOLUTION }}
-
-      - name: Install dependencies
-        run: dotnet restore ${{env.SOLUTION}}
-
-      - name: Build
-        run: |
-          dotnet build `
-           --configuration ${{ env.CONFIG }} `
-           ${{ env.SOLUTION }}
-
-      - name: Pack all nuspec files
-        shell: bash
-        working-directory: ${{ github.workspace }}
-        run: |
-          for nuspecFile in ./Source/**/*.nuspec
-          do
-            nuget pack $nuspecFile \
-             -Version ${{ env.VERSION }} \
-             -Properties Configuration=${{ env.CONFIG }} \
-             -OutputDirectory .\${{ env.NUGET_OUTPUT }}
-          done
-
       - name: Push to MyGet Feed
         shell: bash
-        working-directory: ${{ github.workspace }}
+        working-directory: ${{ env.NUGET_OUTPUT }}
         run: |
-          for nugetFile in ./.${{ env.NUGET_OUTPUT }}/*.nupkg
+          for nugetFile in ./*.nupkg
           do
             nuget push $nugetFile ${{ env.MYGET_TOKEN }} -Source ${{ env.MYGET_FEED }}
           done
