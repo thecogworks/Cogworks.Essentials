@@ -311,7 +311,10 @@ csharp_prefer_simple_using_statement = true:suggestion
 # Treat all cs files in this folder as generated code
 
 # SA1202: Elements should be ordered by access
-dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1202.severity = warning
+
+# SA1209: Using alias directives should be placed after all using namespace directives.
+dotnet_diagnostic.SA1202.severity = warning
 
 # CA1021: Avoid out parameters
 dotnet_diagnostic.CA1021.severity = none

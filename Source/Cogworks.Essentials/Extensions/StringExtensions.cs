@@ -4,8 +4,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-using Separators = Cogworks.Essentials.Constants.StringConstants.Separators;
 using Microsoft.IdentityModel.Tokens;
+using Separators = Cogworks.Essentials.Constants.StringConstants.Separators;
 
 namespace Cogworks.Essentials.Extensions
 {
@@ -116,7 +116,7 @@ namespace Cogworks.Essentials.Extensions
                 ? $"<pre>{input.Trim()}</pre>"
                 : input;
 
-        private static bool IsInTags(this string input)
+        public static bool IsInTags(this string input)
         {
             var text = input.Trim();
             return text.StartsWith("<") && text.EndsWith(">");
