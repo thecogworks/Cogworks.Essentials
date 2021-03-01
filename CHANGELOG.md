@@ -1,3 +1,13 @@
+<a name="1.0.8"></a>
+## [1.0.8](https://github.com/thecogworks/cog-essentials/compare/1.0.7...1.0.8) (2021-03-01)
+
+
+### Bug Fixes
+
+* changed step for getting artifact ([2562e2d](https://github.com/thecogworks/cog-essentials/commit/2562e2d))
+
+
+
 <a name="1.0.7"></a>
 ## [1.0.7](https://github.com/thecogworks/cog-essentials/compare/1.0.6...1.0.7) (2021-03-01)
 
