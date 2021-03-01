@@ -1,3 +1,13 @@
+<a name="1.0.7"></a>
+## [1.0.7](https://github.com/thecogworks/cog-essentials/compare/1.0.6...1.0.7) (2021-03-01)
+
+
+### Bug Fixes
+
+* fixing uploading build artifact ([84e5da4](https://github.com/thecogworks/cog-essentials/commit/84e5da4))
+
+
+
 <a name="1.0.6"></a>
 ## [1.0.6](https://github.com/thecogworks/cog-essentials/compare/1.0.5...1.0.6) (2021-03-01)
 
