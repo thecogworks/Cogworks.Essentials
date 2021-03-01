@@ -17,8 +17,7 @@ jobs:
       NUGET_EXTRACTED: './.output/nuget/extracted/'
 
       # Project Setup
-      VERSION: '1.0.0'
-      PACKAGE_NAME: 'Cogworks.Essentials'
+      PROJECT_NAME: 'Cogworks.Essentials'
       UMBRACO_OUTPUT: './.output/umbraco/'
 
     steps:
@@ -48,7 +47,7 @@ jobs:
       - name: Extract artifact
         shell: powershell
         run: |
-          Install-Package -Name ${{ env.PACKAGE_NAME }} -Source ${{ env.NUGET_OUTPUT }} -Destination ${{ env.NUGET_EXTRACTED }}
+          Install-Package -Name ${{ env.PROJECT_NAME }} -Source ${{ env.NUGET_OUTPUT }} -Destination ${{ env.NUGET_EXTRACTED }}
 
       - name: Copy package files
         shell: bash
@@ -56,7 +55,7 @@ jobs:
 
           mkdir -p ${{ env.UMBRACO_OUTPUT }} && find ${{ env.NUGET_EXTRACTED }} -name "*.dll" -print0 | xargs -0 -I {} cp -r {} ${{ env.UMBRACO_OUTPUT }}
 
-          mkdir -p ${{ env.UMBRACO_OUTPUT }} && find . -type d -regex ".*/${{ env.PACKAGE_NAME }}.${{ env.VERSION }}/.*App_Plugins" -print0 |  xargs -0 -I {} cp -r {} ${{ env.UMBRACO_OUTPUT }}
+          mkdir -p ${{ env.UMBRACO_OUTPUT }} && find . -type d -regex ".*/${{ env.PROJECT_NAME }}.${{ env.VERSION }}/.*App_Plugins" -print0 |  xargs -0 -I {} cp -r {} ${{ env.UMBRACO_OUTPUT }}
 
           is_empty_directory=$([ "$(ls -A ${{ env.UMBRACO_OUTPUT }})" ] && echo false || echo true)
 
@@ -68,5 +67,5 @@ jobs:
       - name: Upload Our.Umbraco package Artifact to GitHub Action
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.PACKAGE_NAME }}.${{ env.VERSION }}
+          name: ${{ env.PROJECT_NAME }}.${{ env.VERSION }}
           path: ${{ env.UMBRACO_OUTPUT }}
