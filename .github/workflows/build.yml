@@ -3,11 +3,9 @@ name: Build
 on:
   pull_request:
     branches: [ main, master, develop ]
-
   release:
     types:
-      - created
-
+      - published
   workflow_dispatch:
 
 jobs:
