@@ -49,14 +49,19 @@ jobs:
         run: |
           Install-Package -Name ${{ env.PROJECT_NAME }} -Source ${{ env.NUGET_OUTPUT }} -Destination ${{ env.NUGET_EXTRACTED }}
 
-      - name: Copy package files
+      - name: Copy package dlls
         shell: bash
         run: |
-
           mkdir -p ${{ env.UMBRACO_OUTPUT }} && find ${{ env.NUGET_EXTRACTED }} -name "*.dll" -print0 | xargs -0 -I {} cp -r {} ${{ env.UMBRACO_OUTPUT }}
 
+      - name: Copy package App_Plugins
+        shell: bash
+        run: |
           mkdir -p ${{ env.UMBRACO_OUTPUT }} && find . -type d -regex ".*/${{ env.PROJECT_NAME }}.${{ env.VERSION }}/.*App_Plugins" -print0 |  xargs -0 -I {} cp -r {} ${{ env.UMBRACO_OUTPUT }}
 
+      - name: Check Umbraco output directory
+        shell: bash
+        run: |
           is_empty_directory=$([ "$(ls -A ${{ env.UMBRACO_OUTPUT }})" ] && echo false || echo true)
 
           if [[ is_empty_directory == true ]]; then
