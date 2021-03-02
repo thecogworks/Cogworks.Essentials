@@ -45,7 +45,7 @@ jobs:
           path: ${{ env.NUGET_OUTPUT }}
 
       - name: Extract NuGet file
-        shell: powershell
+        shell: pwsh
         run: |
           Install-Package -Name ${{ env.PROJECT_NAME }} -Source ${{ env.NUGET_OUTPUT }} -Destination ${{ env.NUGET_EXTRACTED }}
 
