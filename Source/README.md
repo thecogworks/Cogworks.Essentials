@@ -10,7 +10,7 @@
 [![Project Code](https://img.shields.io/static/v1?label=cog%20essentials&message=cog-essentials&color=lightgray&style=flat-square)]() [![Version](https://img.shields.io/static/v1?label=&message=version&color=informational&style=flat-square)](https://github.com/thecogworks/cog-essentials/releases) [![License](https://img.shields.io/badge/license-MIT-4c9182.svg)](LICENSE.md)
 | <!-- --> | <!-- --> |
 | -------- | -------- |
-| **Changelog** | [![Changelog generator](https://github.com/thecogworks/cog-essentials/actions/workflows/changelog.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/changelog.yml)|
+| **Changelog** | [![Changelog generator](https://github.com/thecogworks/cog-essentials/actions/workflows/changelog.yml/badge.svg)](https://github.com/thecogworks/cog-essentials/actions/workflows/changelog.yml)|
 | **GitFlow** | [![Git Flow](https://github.com/thecogworks/cog-essentials/actions/workflows/gitflow.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/gitflow.yml) |
 | **Build** | [![Build](https://github.com/thecogworks/cog-essentials/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/build.yml) |
 | **MyGet** | [![(NuGet) MyGet Release](https://github.com/thecogworks/cog-essentials/actions/workflows/release-myget.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/release-myget.yml) |

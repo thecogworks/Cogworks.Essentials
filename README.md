@@ -11,7 +11,7 @@
 
 | <!-- --> | <!-- --> |
 | -------- | -------- |
-| **Changelog** | [![Changelog generator](https://github.com/thecogworks/cog-essentials/actions/workflows/changelog.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/changelog.yml)|
+| **Changelog** | [![Changelog generator](https://github.com/thecogworks/cog-essentials/actions/workflows/changelog.yml/badge.svg)](https://github.com/thecogworks/cog-essentials/actions/workflows/changelog.yml)|
 | **GitFlow** | [![Git Flow](https://github.com/thecogworks/cog-essentials/actions/workflows/gitflow.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/gitflow.yml) |
 | **Build** | [![Build](https://github.com/thecogworks/cog-essentials/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/build.yml) |
 | **MyGet** | [![(NuGet) MyGet Release](https://github.com/thecogworks/cog-essentials/actions/workflows/release-myget.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/release-myget.yml) |
