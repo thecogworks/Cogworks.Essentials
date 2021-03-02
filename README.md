@@ -9,6 +9,11 @@
 
 [![Project Code](https://img.shields.io/static/v1?label=cog%20essentials&message=cog-essentials&color=lightgray&style=flat-square)]() [![Version](https://img.shields.io/static/v1?label=&message=version&color=informational&style=flat-square)](https://github.com/thecogworks/cog-essentials/releases) [![License](https://img.shields.io/badge/license-MIT-4c9182.svg)](LICENSE.md)
 
+
+| Changelog | GitFlow | Build | MyGet | GitHub Packages | Our.Umbraco |
+| --------- | ------- | ----- | ----- | --------------- | ----------- |
+|     [![Changelog generator](https://github.com/thecogworks/cog-essentials/actions/workflows/changelog.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/changelog.yml)      |    [![Git Flow](https://github.com/thecogworks/cog-essentials/actions/workflows/gitflow.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/gitflow.yml)     |   [![Build](https://github.com/thecogworks/cog-essentials/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/build.yml)    |    [![(NuGet) MyGet Release](https://github.com/thecogworks/cog-essentials/actions/workflows/release-myget.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/release-myget.yml)   |       [![(NuGet) GitHub Packages Release](https://github.com/thecogworks/cog-essentials/actions/workflows/release-github.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/release-github.yml)          |      [![(Umbraco) Our.Umbraco Package Generation](https://github.com/thecogworks/cog-essentials/actions/workflows/release-umbraco.yml/badge.svg?branch=master)](https://github.com/thecogworks/cog-essentials/actions/workflows/release-umbraco.yml)       |
+
 </div>
 
 ---
