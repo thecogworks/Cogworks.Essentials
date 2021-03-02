@@ -33,10 +33,10 @@ jobs:
           tag_check=$(git describe --exact-match `git rev-parse HEAD` | head -1)
           echo "VERSION=$tag_check" >> $GITHUB_ENV
 
+
       - name: Download a single artifact
-        uses: dawidd6/action-download-artifact@v2
+        uses: aochmann/actions-download-artifact@1.0.1
         with:
-          workflow: build.yml
           name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
           path: ${{ env.GITHUB_PACKAGES_OUTPUT }}
 

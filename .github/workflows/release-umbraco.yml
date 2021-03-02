@@ -9,7 +9,7 @@ jobs:
   our_umbraco:
     name: Our.Umbraco Package Generation
     if: ${{ github.event.workflow_run.conclusion == 'success' && github.event_name != 'pull_request' }}
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     env:
       # Nuget Setup
       NUGET_VERSION: 'latest'
@@ -39,9 +39,8 @@ jobs:
           nuget-version: ${{ env.NUGET_VERSION }}
 
       - name: Download a single artifact
-        uses: dawidd6/action-download-artifact@v2
+        uses: aochmann/actions-download-artifact@1.0.1
         with:
-          workflow: build.yml
           name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
           path: ${{ env.GITHUB_PACKAGES_OUTPUT }}
 
