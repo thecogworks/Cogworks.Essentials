@@ -1,3 +1,13 @@
+<a name="1.0.12"></a>
+## [1.0.12](https://github.com/thecogworks/cog-essentials/compare/1.0.11...1.0.12) (2021-03-02)
+
+
+### Bug Fixes
+
+* fixed linux powershell name ([eb88a06](https://github.com/thecogworks/cog-essentials/commit/eb88a06))
+
+
+
 <a name="1.0.11"></a>
 ## [1.0.11](https://github.com/thecogworks/cog-essentials/compare/1.0.10...1.0.11) (2021-03-02)
 
