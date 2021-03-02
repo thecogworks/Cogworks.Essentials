@@ -1,3 +1,13 @@
+<a name="1.0.11"></a>
+## [1.0.11](https://github.com/thecogworks/cog-essentials/compare/1.0.10...1.0.11) (2021-03-02)
+
+
+### Bug Fixes
+
+* fixed artifact download path ([ddd988c](https://github.com/thecogworks/cog-essentials/commit/ddd988c))
+
+
+
 <a name="1.0.10"></a>
 ## [1.0.10](https://github.com/thecogworks/cog-essentials/compare/1.0.9...1.0.10) (2021-03-02)
 
