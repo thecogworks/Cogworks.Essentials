@@ -39,7 +39,7 @@ jobs:
           nuget-version: ${{ env.NUGET_VERSION }}
 
       - name: Download a single artifact
-        uses: aochmann/actions-download-artifact@1.0.1
+        uses: aochmann/actions-download-artifact@1.0.2
         with:
           name: build_${{ env.PROJECT_NAME }}.${{ env.VERSION }}
           path: ${{ env.GITHUB_PACKAGES_OUTPUT }}
