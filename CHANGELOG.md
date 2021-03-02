@@ -1,3 +1,8 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/thecogworks/cog-essentials/compare/1.0.12...1.1.0) (2021-03-02)
+
+
+
 <a name="1.0.12"></a>
 ## [1.0.12](https://github.com/thecogworks/cog-essentials/compare/1.0.11...1.0.12) (2021-03-02)
 
