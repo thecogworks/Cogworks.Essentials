@@ -1,3 +1,15 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/thecogworks/cog-essentials/compare/0.9.0...1.0.0) (2021-03-04)
+
+
+### Features
+
+* added status badges ([61a0931](https://github.com/thecogworks/cog-essentials/commit/61a0931))
+* added status badges ([415499a](https://github.com/thecogworks/cog-essentials/commit/415499a))
+* updated table content ([3fa16b9](https://github.com/thecogworks/cog-essentials/commit/3fa16b9))
+
+
+
 <a name="0.9.0"></a>
 # [0.9.0](https://github.com/thecogworks/cog-essentials/compare/212309b...0.9.0) (2021-03-02)
 
