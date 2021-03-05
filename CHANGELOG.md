@@ -1,3 +1,18 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/thecogworks/Cogworks.Essentials/compare/1.0.0...1.0.1) (2021-03-05)
+
+
+### Bug Fixes
+
+* added skipping dependencies ([5e9214a](https://github.com/thecogworks/Cogworks.Essentials/commit/5e9214a))
+
+
+### Features
+
+* added nuget release action ([bd86f40](https://github.com/thecogworks/Cogworks.Essentials/commit/bd86f40))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/thecogworks/Cogworks.Essentials/compare/0.9.0...1.0.0) (2021-03-04)
 
