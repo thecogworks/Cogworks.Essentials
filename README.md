@@ -47,7 +47,7 @@
 
 ## About <a name = "about"></a>
 
-BE universal essentials (.NET Standard).
+Backend universal essentials (.NET Standard).
 
 ## Usage <a name="usage"></a>
 

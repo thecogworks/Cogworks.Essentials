@@ -97,19 +97,7 @@ public class (TestedClassName)Tests
 **Methods names**:
 
 ```csharp
-public void/Task/ValueTask Should_ExpectedBehaviour_When_StateUnderTest()
-```
-
-**Example**:
-
-```csharp
-public class RateTests
-{
-    [Fact]
-    public void Should_ThrowRateTypeException_When_DisablingRateOnEmptyProject() => Assert.Throws<RateTypeException>(()
-        => new Project(new ProjectId(Guid.NewGuid()), new DateTime(2017, 1, 1))
-                .DisableRate("r1", DateTime.Now));
-}
+public void/Task/ValueTask Should_ExpectedBehavior_When_StateUnderTest()
 ```
 
 #### Integration Tests
@@ -127,49 +115,4 @@ public class RateTests
          public Task/void Should_SomeAction_SomeOutcome
      }
  }
-```
-
-**Example**:
-
-```csharp
-public class RatesSpecs : GivenServices
-{
-    /* Here goes some configuration */
-
-     public class Given_2RateTypes1Overriden : RatesSpecs
-        {
-            public Given_2RateTypes1Overriden() => Project
-                .WithRate(3, Start, name: Day)
-                .WithRate(4, Start, WorkerId)
-                .Build();
-
-            [Fact]
-            public async Task Should_Return_1Default() => (await GetRatesAsync(WorkerId, FirstRateStart, FirstRateEnd))
-                .Should().Contain(rate => rate.ClientRate == 3);
-
-            [Fact]
-            public async Task Should_NotReturn_OverridenDefault() => (await GetRatesAsync(WorkerId, FirstRateStart, FirstRateEnd))
-                .Should().NotContain(rate => rate.ClientRate == 2);
-        }
-
-        public class Given_2OverridenRateTypes : RatesSpecs
-        {
-            public Given_2OverridenRateTypes() => Project
-                .WithRate(2, Start, name: Day)
-                .WithRate(3, Start, WorkerId, Day)
-                .WithRate(3, Start, WorkerId)
-                .Build();
-
-            [Fact]
-            public async Task Should_NotReturn_Defaults() => (await GetRatesAsync(WorkerId, FirstRateStart, FirstRateEnd))
-                .Should().NotContain(rate => rate.ClientRate == 2);
-        }
-
-        public class Given_RateStartedBeforeProjectStart : RatesSpecs
-        {
-            [Fact]
-            public void Should_Throw_RateTypeException()
-                => Assert.Throws<RateTypeException>(() => Project.WithRate(3, Start.AddDays(-1), name: Day));
-        }
-}
 ```
