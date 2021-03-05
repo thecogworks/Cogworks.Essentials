@@ -7,25 +7,25 @@
 
 <div align="center">
 
-[![Project Code](https://img.shields.io/static/v1?label=&message=Cogworks.Essentials&color=lightgray&style=flat-square)]() [![Version](https://img.shields.io/static/v1?label=&message=version&color=informational&style=flat-square)](https://github.com/thecogworks/cog-essentials/releases) [![License](https://img.shields.io/badge/license-MIT-4c9182.svg)](LICENSE.md)
+[![Project Code](https://img.shields.io/static/v1?label=&message=Cogworks.Essentials&color=lightgray&style=flat-square)]() [![Version](https://img.shields.io/static/v1?label=&message=version&color=informational&style=flat-square)](https://github.com/thecogworks/Cogworks.Essentials/releases) [![License](https://img.shields.io/badge/license-MIT-4c9182.svg)](LICENSE.md)
 
 ##### Build status
 
 | <!-- --> | <!-- --> |
 | -------- | -------- |
-| **Changelog** | [![Changelog generator](https://github.com/thecogworks/cog-essentials/actions/workflows/changelog.yml/badge.svg)](https://github.com/thecogworks/cog-essentials/actions/workflows/changelog.yml)|
-| **GitFlow** | [![Git Flow](https://github.com/thecogworks/cog-essentials/actions/workflows/gitflow.yml/badge.svg)](https://github.com/thecogworks/cog-essentials/actions/workflows/gitflow.yml) |
-| **Build** | [![Build](https://github.com/thecogworks/cog-essentials/actions/workflows/build.yml/badge.svg)](https://github.com/thecogworks/cog-essentials/actions/workflows/build.yml) |
-| **GitHub Packages** | [![(NuGet) GitHub Packages Release](https://github.com/thecogworks/cog-essentials/actions/workflows/release-github.yml/badge.svg)](https://github.com/thecogworks/cog-essentials/actions/workflows/release-github.yml) |
-| **Our.Umbraco Package** | [![(Umbraco) Our.Umbraco Package Generation](https://github.com/thecogworks/cog-essentials/actions/workflows/release-umbraco.yml/badge.svg)](https://github.com/thecogworks/cog-essentials/actions/workflows/release-umbraco.yml) |
+| **Changelog** | [![Changelog generator](https://github.com/thecogworks/Cogworks.Essentials/actions/workflows/changelog.yml/badge.svg)](https://github.com/thecogworks/Cogworks.Essentials/actions/workflows/changelog.yml)|
+| **GitFlow** | [![Git Flow](https://github.com/thecogworks/Cogworks.Essentials/actions/workflows/gitflow.yml/badge.svg)](https://github.com/thecogworks/Cogworks.Essentials/actions/workflows/gitflow.yml) |
+| **Build** | [![Build](https://github.com/thecogworks/Cogworks.Essentials/actions/workflows/build.yml/badge.svg)](https://github.com/thecogworks/Cogworks.Essentials/actions/workflows/build.yml) |
+| **GitHub Packages** | [![(NuGet) GitHub Packages Release](https://github.com/thecogworks/Cogworks.Essentials/actions/workflows/release-github.yml/badge.svg)](https://github.com/thecogworks/Cogworks.Essentials/actions/workflows/release-github.yml) |
+| **Our.Umbraco Package** | [![(Umbraco) Our.Umbraco Package Generation](https://github.com/thecogworks/Cogworks.Essentials/actions/workflows/release-umbraco.yml/badge.svg)](https://github.com/thecogworks/Cogworks.Essentials/actions/workflows/release-umbraco.yml) |
 |<!-- --> | <!-- -->|
 
 ##### Packages
 
 | <!-- --> | <!-- --> |
 | -------- | -------- |
-| **GitHub Packages** | [![Github Packages](https://img.shields.io/static/v1?label=&message=github-packages&color=9cf&style=flat-square)](https://github.com/thecogworks/cog-essentials/packages/646974) |
-| **Our.Umbraco Package** | [![Our.Umbraco](https://img.shields.io/static/v1?label=&message=our.umbraco&color=lightgray&style=flat-square)](https://github.com/thecogworks/cog-essentials/actions/workflows/release-umbraco.yml) |
+| **GitHub Packages** | [![Github Packages](https://img.shields.io/static/v1?label=&message=github-packages&color=9cf&style=flat-square)](https://github.com/thecogworks/Cogworks.Essentials/packages/646974) |
+| **Our.Umbraco Package** | [![Our.Umbraco](https://img.shields.io/static/v1?label=&message=our.umbraco&color=lightgray&style=flat-square)](https://github.com/thecogworks/Cogworks.Essentials/actions/workflows/release-umbraco.yml) |
 |<!-- --> | <!-- -->|
 
 </div>
