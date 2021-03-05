@@ -10,7 +10,7 @@
     <repository type="git" url="https://github.com/thecogworks/Cogworks.Essentials" />
     <license type="expression">MIT</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Backend universal essentials (.NET Standard).</description>
+    <description>Set of the .NET Standard essentials including common constants, enums, extensions, helpers and services.</description>
     <copyright>The Cogworks Limited 2021</copyright>
     <tags>Essentials, Cogworks, dotnet, net, csharp, backend</tags>
   </metadata>

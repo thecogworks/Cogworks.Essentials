@@ -2,7 +2,7 @@
   "version": "1.0.1",
   "name": "cogworks-essentials",
   "code": "Cogworks.Essentials",
-  "description": "Backend universal essentials (.NET Standard).",
+  "description": "Set of the .NET Standard essentials including common constants, enums, extensions, helpers and services.",
   "author": "Cogworks",
   "license": "MIT",
   "scripts": {
