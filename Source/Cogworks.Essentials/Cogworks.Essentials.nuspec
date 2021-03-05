@@ -6,8 +6,8 @@
     <title>Cogworks.Essentials</title>
     <authors>Cogworks</authors>
     <owners>Cogworks</owners>
-    <projectUrl>https://github.com/thecogworks/cog-essentials</projectUrl>
-    <repository type="git" url="https://github.com/thecogworks/cog-essentials" />
+    <projectUrl>https://github.com/thecogworks/Cogworks.Essentials</projectUrl>
+    <repository type="git" url="https://github.com/thecogworks/Cogworks.Essentials" />
     <license type="expression">MIT</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Backend universal essentials (.NET Standard).</description>
