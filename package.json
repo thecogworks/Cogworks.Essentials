@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "name": "cogworks-essentials",
-  "code": "cog-essentials",
+  "code": "Cogworks.Essentials",
   "description": "Backend universal essentials (.NET Standard).",
   "author": "Cogworks",
   "license": "MIT",
