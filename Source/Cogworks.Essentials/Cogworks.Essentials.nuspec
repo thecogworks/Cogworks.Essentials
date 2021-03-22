@@ -13,6 +13,9 @@
     <description>Set of the .NET Standard essentials including common constants, enums, extensions, helpers and services.</description>
     <copyright>The Cogworks Limited 2021</copyright>
     <tags>Essentials, Cogworks, dotnet, net, csharp, backend</tags>
+    <dependencies>
+      <group targetFramework="netstandard2.0"></group>
+    </dependencies>
   </metadata>
   <files>
     <file src="bin\Release\**\Cogworks.Essentials.dll" target="lib" />
