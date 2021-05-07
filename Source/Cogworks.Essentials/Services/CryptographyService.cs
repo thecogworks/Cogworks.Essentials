@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Security.Cryptography;
-using Cogworks.Essentials.Helpers.Interfaces;
+using Cogworks.Essentials.Services.Interfaces;
 
-namespace Cogworks.Essentials.Helpers
+namespace Cogworks.Essentials.Services
 {
-    public class CryptographyHelper : ICryptographyHelper
+    public class CryptographyService : ICryptographyService
     {
         public string GenerateRandomToken()
         {
