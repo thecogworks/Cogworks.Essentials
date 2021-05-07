@@ -15,7 +15,9 @@ namespace Cogworks.Essentials.Extensions
             => !string.IsNullOrWhiteSpace(input);
 
         public static Uri ToUri(this string urlString)
-            => new Uri(urlString);
+            => urlString.HasValue()
+                ? new Uri(urlString)
+                : null;
 
         public static string ToCamelCase(this string original)
         {
@@ -222,5 +224,51 @@ namespace Cogworks.Essentials.Extensions
                     .Replace("\r", string.Empty)
                     .Replace(Environment.NewLine, string.Empty)
                 : string.Empty;
+
+        public static string GetIpAddressWithoutPort(this string ipAddress)
+        {
+            var portIndex = ipAddress.IndexOf(':');
+
+            return portIndex < 0
+                ? ipAddress
+                : ipAddress.Substring(0, portIndex);
+        }
+
+        public static string AddOrUpdateQueryParameter(this string url, string queryKey, string queryValue)
+        {
+            var splitted = url.Split(Separators.QuestionMark.ToCharArray());
+            var queryString = HttpUtility.ParseQueryString(splitted.Skip(1).FirstOrDefault() ?? string.Empty);
+
+            queryString[queryKey] = queryValue;
+
+            return $"{splitted.FirstOrDefault()}?{queryString}";
+        }
+
+        /// <summary>
+        /// Strips out <P> and </P> tags if they were used as a wrapper
+        /// for other HTML content.
+        /// </summary>
+        /// <param name="text">The HTML text.</param>
+        public static string RemoveParagraphWrapperTags(this string text)
+        {
+            if (!text.HasValue())
+            {
+                return text;
+            }
+
+            var trimmedText = text.Trim();
+            var paragraphIndex = trimmedText.IndexOf("<p>", StringComparison.Ordinal);
+
+            if (paragraphIndex != 0
+                || paragraphIndex != trimmedText.LastIndexOf("<p>", StringComparison.Ordinal)
+                || trimmedText.Substring(trimmedText.Length - 4, 4) != "</p>")
+            {
+                // Paragraph not used as a wrapper element
+                return text;
+            }
+
+            // Remove paragraph wrapper tags
+            return trimmedText.Substring(3, trimmedText.Length - 7);
+        }
     }
 }
