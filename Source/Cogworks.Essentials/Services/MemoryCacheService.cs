@@ -35,11 +35,11 @@ namespace Cogworks.Essentials.Services
 
         public T GetOrAddCacheItem<T>(string cacheKey, Func<T> getValueFunction, int? cacheDurationInSeconds)
         {
-            cacheDurationInSeconds ??= DateTimeConstants.TimeInSecondsConstants.Hour;
-            var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(cacheDurationInSeconds.Value);
-
             var cacheEntry = Cache.GetOrCreate(cacheKey, entry =>
             {
+                cacheDurationInSeconds ??= DateTimeConstants.TimeInSecondsConstants.Hour;
+                var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(cacheDurationInSeconds.Value);
+
                 entry.AbsoluteExpiration = cacheDurationDateTime;
                 return getValueFunction();
             });
