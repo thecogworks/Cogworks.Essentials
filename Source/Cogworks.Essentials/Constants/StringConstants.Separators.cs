@@ -16,6 +16,7 @@
             public const string Vertical = "|";
             public const string Hyphen = "-";
             public const string HtmlNewLine = "<br />";
+            public const string QuestionMark = "?";
         }
     }
 }
