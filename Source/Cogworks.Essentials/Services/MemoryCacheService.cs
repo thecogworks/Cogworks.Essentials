@@ -8,34 +8,40 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Cogworks.Essentials.Services
 {
-    public class MemoryCacheService : ICacheService
+    public class MemoryCacheService : ICacheService, IDisposable
     {
-        private static MemoryCache Cache => new MemoryCache(new MemoryCacheOptions());
+        private readonly IMemoryCache _memoryCache;
+
+        public MemoryCacheService(IMemoryCache memoryCache)
+            => _memoryCache = memoryCache;
+
+        public MemoryCacheService()
+            => _memoryCache = new MemoryCache(new MemoryCacheOptions());
 
         private static ConcurrentDictionary<object, SemaphoreSlim> Locks => new ConcurrentDictionary<object, SemaphoreSlim>();
 
         public bool Contains(string cacheKey)
-            => Cache.TryGetValue(cacheKey, out _);
+            => _memoryCache.TryGetValue(cacheKey, out _);
 
         public T GetCacheItem<T>(string cacheKey)
-            => Cache.Get(cacheKey) is T cachedObject
+            => _memoryCache.Get(cacheKey) is T cachedObject
                 ? cachedObject
                 : default;
 
         public void RemoveCacheItem(string cacheKey)
-            => Cache.Remove(cacheKey);
+            => _memoryCache.Remove(cacheKey);
 
         public void AddCacheItem(string cacheKey, object value, int? cacheDurationInSeconds)
         {
             cacheDurationInSeconds ??= DateTimeConstants.TimeInSecondsConstants.Hour;
             var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(cacheDurationInSeconds.Value);
 
-            Cache.Set(cacheKey, value, cacheDurationDateTime);
+            _memoryCache.Set(cacheKey, value, cacheDurationDateTime);
         }
 
         public T GetOrAddCacheItem<T>(string cacheKey, Func<T> getValueFunction, int? cacheDurationInSeconds)
         {
-            var cacheEntry = Cache.GetOrCreate(cacheKey, entry =>
+            var cacheEntry = _memoryCache.GetOrCreate(cacheKey, entry =>
             {
                 cacheDurationInSeconds ??= DateTimeConstants.TimeInSecondsConstants.Hour;
                 var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(cacheDurationInSeconds.Value);
@@ -56,7 +62,7 @@ namespace Cogworks.Essentials.Services
         /// https://michaelscodingspot.com/cache-implementations-in-csharp-net/
         public async Task<T> MultiThreadProofGetOrAddCacheItem<T>(string cacheKey, Func<Task<T>> getValueFunction, int? cacheDurationInSeconds)
         {
-            if (Cache.TryGetValue(cacheKey, out T cacheEntry))
+            if (_memoryCache.TryGetValue(cacheKey, out T cacheEntry))
             {
                 return cacheEntry;
             }
@@ -66,14 +72,14 @@ namespace Cogworks.Essentials.Services
 
             try
             {
-                if (!Cache.TryGetValue(cacheKey, out cacheEntry))
+                if (!_memoryCache.TryGetValue(cacheKey, out cacheEntry))
                 {
                     cacheEntry = await getValueFunction();
 
                     cacheDurationInSeconds ??= DateTimeConstants.TimeInSecondsConstants.Hour;
                     var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(cacheDurationInSeconds.Value);
 
-                    Cache.Set(cacheKey, cacheEntry, cacheDurationDateTime);
+                    _memoryCache.Set(cacheKey, cacheEntry, cacheDurationDateTime);
                 }
             }
             finally
@@ -83,5 +89,8 @@ namespace Cogworks.Essentials.Services
 
             return cacheEntry;
         }
+
+        public void Dispose()
+            => _memoryCache.Dispose();
     }
 }
