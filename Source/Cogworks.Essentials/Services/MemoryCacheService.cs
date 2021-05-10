@@ -12,13 +12,13 @@ namespace Cogworks.Essentials.Services
     {
         private readonly IMemoryCache _memoryCache;
 
+        private static ConcurrentDictionary<object, SemaphoreSlim> Locks => new ConcurrentDictionary<object, SemaphoreSlim>();
+
         public MemoryCacheService(IMemoryCache memoryCache)
             => _memoryCache = memoryCache;
 
         public MemoryCacheService()
             => _memoryCache = new MemoryCache(new MemoryCacheOptions());
-
-        private static ConcurrentDictionary<object, SemaphoreSlim> Locks => new ConcurrentDictionary<object, SemaphoreSlim>();
 
         public bool Contains(string cacheKey)
             => _memoryCache.TryGetValue(cacheKey, out _);
