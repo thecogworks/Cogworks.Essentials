@@ -1,10 +1,18 @@
-﻿namespace Cogworks.Essentials.Services
+﻿using System;
+using System.Threading.Tasks;
+
+namespace Cogworks.Essentials.Services.Interfaces
 {
     public interface ICacheService
     {
+        T GetOrAddCacheItem<T>(string cacheKey, Func<T> getValueFunction, int? cacheDurationInSeconds);
+
+        Task<T> MultiThreadProofGetOrAddCacheItem<T>(string cacheKey, Func<Task<T>> getValueFunction,
+            int? cacheDurationInSeconds);
+
         T GetCacheItem<T>(string cacheKey);
 
-        void SetCacheItem(string cacheKey, object value, int cacheDuration = 24 * 60 * 60);
+        void AddCacheItem(string cacheKey, object value, int? cacheDurationInSeconds);
 
         void RemoveCacheItem(string cacheKey);
 

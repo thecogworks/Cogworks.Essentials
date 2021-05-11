@@ -325,6 +325,12 @@ dotnet_diagnostic.CA1310.severity = suggestion
 # SA1629: Documentation text should end with a period
 dotnet_diagnostic.SA1629.severity = suggestion
 
+# SA1518: A closing brace within a C# element, statement, or expression is preceded by a blank line.
+dotnet_diagnostic.SA1518.severity = none
+
+# CA1063: Implement IDisposable correctly
+dotnet_diagnostic.CA1063.severity = none
+
 [*.generated.cs]
 # Treat all cs files in this folder as generated code
 
