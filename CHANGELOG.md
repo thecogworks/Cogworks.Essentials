@@ -1,3 +1,21 @@
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/thecogworks/Cogworks.Essentials/compare/1.0.2...1.0.3) (2021-05-11)
+
+
+### Bug Fixes
+
+* moving Cryptography helper to a service ([f68b1bf](https://github.com/thecogworks/Cogworks.Essentials/commit/f68b1bf))
+
+
+### Features
+
+* added memory cache service constructors ([1180798](https://github.com/thecogworks/Cogworks.Essentials/commit/1180798))
+* added nuspec dependency description ([1917098](https://github.com/thecogworks/Cogworks.Essentials/commit/1917098))
+* adding more methods to our memory cache implementation ([c08fbb1](https://github.com/thecogworks/Cogworks.Essentials/commit/c08fbb1))
+* adding more string extensions ([648090c](https://github.com/thecogworks/Cogworks.Essentials/commit/648090c))
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/thecogworks/Cogworks.Essentials/compare/1.0.1...1.0.2) (2021-03-05)
 
