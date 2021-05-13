@@ -31,7 +31,7 @@ namespace Cogworks.Essentials.Services
         public void RemoveCacheItem(string cacheKey)
             => _memoryCache.Remove(cacheKey);
 
-        public void AddCacheItem(string cacheKey, object value, int? cacheDurationInSeconds)
+        public void AddCacheItem(string cacheKey, object value, int? cacheDurationInSeconds = null)
         {
             cacheDurationInSeconds ??= DateTimeConstants.TimeInSecondsConstants.Hour;
             var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(cacheDurationInSeconds.Value);
@@ -39,7 +39,7 @@ namespace Cogworks.Essentials.Services
             _memoryCache.Set(cacheKey, value, cacheDurationDateTime);
         }
 
-        public T GetOrAddCacheItem<T>(string cacheKey, Func<T> getValueFunction, int? cacheDurationInSeconds)
+        public T GetOrAddCacheItem<T>(string cacheKey, Func<T> getValueFunction, int? cacheDurationInSeconds = null)
         {
             var cacheEntry = _memoryCache.GetOrCreate(cacheKey, entry =>
             {
@@ -60,7 +60,7 @@ namespace Cogworks.Essentials.Services
         /// - When the creation of an item has to be ensured to be done once per key.
         /// </summary>
         /// https://michaelscodingspot.com/cache-implementations-in-csharp-net/
-        public async Task<T> MultiThreadProofGetOrAddCacheItem<T>(string cacheKey, Func<Task<T>> getValueFunction, int? cacheDurationInSeconds)
+        public async Task<T> MultiThreadProofGetOrAddCacheItem<T>(string cacheKey, Func<Task<T>> getValueFunction, int? cacheDurationInSeconds = null)
         {
             if (_memoryCache.TryGetValue(cacheKey, out T cacheEntry))
             {
