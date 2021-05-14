@@ -7,7 +7,7 @@ namespace Cogworks.Essentials.Services.Interfaces
     {
         T GetOrAddCacheItem<T>(string cacheKey, Func<T> getValueFunction, int? cacheDurationInSeconds);
 
-        Task<T> MultiThreadProofGetOrAddCacheItem<T>(string cacheKey, Func<Task<T>> getValueFunction,
+        Task<T> GetOrAddCacheItemAsync<T>(string cacheKey, Func<Task<T>> getValueFunction,
             int? cacheDurationInSeconds);
 
         T GetCacheItem<T>(string cacheKey);

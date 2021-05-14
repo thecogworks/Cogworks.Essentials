@@ -119,5 +119,13 @@ namespace Cogworks.Essentials.Extensions
 
             return items.ElementAt(selectedIndex);
         }
+
+        public static void AddUnique<T>(this ICollection<T> self, T item)
+        {
+            if (!self.Contains(item))
+            {
+                self.Add(item);
+            }
+        }
     }
 }
