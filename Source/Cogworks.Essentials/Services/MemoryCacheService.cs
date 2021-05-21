@@ -13,6 +13,8 @@ namespace Cogworks.Essentials.Services
 {
     public class MemoryCacheService : ICacheService, IDisposable
     {
+        private const string CacheKeyList = "CacheKeyList";
+
         private readonly IMemoryCache _memoryCache;
 
         private static ConcurrentDictionary<object, SemaphoreSlim> Locks => new ConcurrentDictionary<object, SemaphoreSlim>();
@@ -151,7 +153,7 @@ namespace Cogworks.Essentials.Services
 
             var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(DateTimeConstants.TimeInSecondsConstants.Year);
             //will this update the cache item ?
-            _memoryCache.Set(StringConstants.CacheKeyList, cacheKeyList, cacheDurationDateTime);
+            _memoryCache.Set(CacheKeyList, cacheKeyList, cacheDurationDateTime);
         }
 
         private void RemoveCacheKeyList(string cacheKey)
@@ -161,7 +163,7 @@ namespace Cogworks.Essentials.Services
 
             var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(DateTimeConstants.TimeInSecondsConstants.Year);
             //will this update the cache item ?
-            _memoryCache.Set(StringConstants.CacheKeyList, cacheKeyList, cacheDurationDateTime);
+            _memoryCache.Set(CacheKeyList, cacheKeyList, cacheDurationDateTime);
         }
 
         private void RemoveCacheKeyList(IEnumerable<string> cacheKeys)
@@ -175,14 +177,14 @@ namespace Cogworks.Essentials.Services
 
             var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(DateTimeConstants.TimeInSecondsConstants.Year);
             //will this update the cache item ?
-            _memoryCache.Set(StringConstants.CacheKeyList, cacheKeyList, cacheDurationDateTime);
+            _memoryCache.Set(CacheKeyList, cacheKeyList, cacheDurationDateTime);
         }
 
         private List<string> GetOrAddCacheKeyList()
         {
             var cacheKeyList = new List<string>();
 
-            var cacheEntry = _memoryCache.GetOrCreate(StringConstants.CacheKeyList, entry =>
+            var cacheEntry = _memoryCache.GetOrCreate(CacheKeyList, entry =>
             {
                 var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(DateTimeConstants.TimeInSecondsConstants.Year);
                 entry.AbsoluteExpiration = cacheDurationDateTime;
