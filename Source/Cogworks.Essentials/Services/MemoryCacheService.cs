@@ -103,24 +103,23 @@ namespace Cogworks.Essentials.Services
             return cacheEntry;
         }
 
-        public void DeleteAllStartingWith(string cacheKey)
+        public void ClearAllStartingWith(string prefixKey)
         {
-            var cacheKeys = GetOrAddCacheKeyList().Where(x => x.StartsWith(cacheKey)).ToList();
+            var cacheKeys = GetOrAddCacheKeyList()
+                .Where(x => x.StartsWith(prefixKey))
+                .ToList();
 
             if (!cacheKeys.HasAny())
             {
                 return;
             }
 
-            var cacheKeysToRemove = new List<string>();
-
             foreach (var key in cacheKeys)
             {
-                cacheKeysToRemove.Add(key);
                 _memoryCache.Remove(key);
             }
 
-            RemoveCacheKeyList(cacheKeysToRemove);
+            RemoveCacheKeyList(cacheKeys);
         }
 
         public void ClearAll()
@@ -132,15 +131,12 @@ namespace Cogworks.Essentials.Services
                 return;
             }
 
-            var cacheKeysToRemove = new List<string>();
-
             foreach (var key in cacheKeys)
             {
-                cacheKeysToRemove.Add(key);
                 _memoryCache.Remove(key);
             }
 
-            RemoveCacheKeyList(cacheKeysToRemove);
+            RemoveCacheKeyList(cacheKeys);
         }
 
         public void Dispose()
@@ -149,50 +145,45 @@ namespace Cogworks.Essentials.Services
         private void AddCacheKeyList(string cacheKey)
         {
             var cacheKeyList = GetOrAddCacheKeyList();
+
             cacheKeyList.AddUnique(cacheKey);
 
             var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(DateTimeConstants.TimeInSecondsConstants.Year);
-            //will this update the cache item ?
+
             _memoryCache.Set(CacheKeyList, cacheKeyList, cacheDurationDateTime);
         }
 
         private void RemoveCacheKeyList(string cacheKey)
         {
             var cacheKeyList = GetOrAddCacheKeyList();
+
             cacheKeyList.Remove(cacheKey);
 
-            var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(DateTimeConstants.TimeInSecondsConstants.Year);
-            //will this update the cache item ?
-            _memoryCache.Set(CacheKeyList, cacheKeyList, cacheDurationDateTime);
+            UpdateCacheKeyList(cacheKeyList);
         }
 
-        private void RemoveCacheKeyList(IEnumerable<string> cacheKeys)
+        private void RemoveCacheKeyList(IEnumerable<string> toBeRemovedItems)
         {
-            var cacheKeyList = GetOrAddCacheKeyList();
+            var cacheKeys = GetOrAddCacheKeyList();
 
-            foreach (var cacheKey in cacheKeys)
-            {
-                cacheKeyList.Remove(cacheKey);
-            }
+            cacheKeys = cacheKeys.Except(toBeRemovedItems).ToList();
 
-            var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(DateTimeConstants.TimeInSecondsConstants.Year);
-            //will this update the cache item ?
-            _memoryCache.Set(CacheKeyList, cacheKeyList, cacheDurationDateTime);
+            UpdateCacheKeyList(cacheKeys);
         }
+
+        private void UpdateCacheKeyList(IEnumerable<string> cacheKeys)
+            => _memoryCache.Set(
+                CacheKeyList,
+                cacheKeys,
+                DateTime.UtcNow.AddSeconds(DateTimeConstants.TimeInSecondsConstants.Year));
 
         private List<string> GetOrAddCacheKeyList()
-        {
-            var cacheKeyList = new List<string>();
-
-            var cacheEntry = _memoryCache.GetOrCreate(CacheKeyList, entry =>
+            => _memoryCache.GetOrCreate(CacheKeyList, entry =>
             {
                 var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(DateTimeConstants.TimeInSecondsConstants.Year);
                 entry.AbsoluteExpiration = cacheDurationDateTime;
 
-                return cacheKeyList;
+                return new List<string>();
             });
-
-            return cacheEntry;
-        }
     }
 }

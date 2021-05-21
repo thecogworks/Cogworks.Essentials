@@ -19,5 +19,7 @@ namespace Cogworks.Essentials.Services.Interfaces
         bool Contains(string cacheKey);
 
         void ClearAll();
+
+        void ClearAllStartingWith(string prefixKey);
     }
 }
