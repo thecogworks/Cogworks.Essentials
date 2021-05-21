@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace Cogworks.Essentials.Services.Interfaces
@@ -17,5 +17,7 @@ namespace Cogworks.Essentials.Services.Interfaces
         void RemoveCacheItem(string cacheKey);
 
         bool Contains(string cacheKey);
+
+        void ClearAll();
     }
 }
