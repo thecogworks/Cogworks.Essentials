@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.AutoNSubstitute;
@@ -273,6 +274,49 @@ namespace Cogworks.Essentials.UnitTests.Services
             _cacheService.Contains(secondCacheKey)
                 .Should()
                 .BeFalse();
+        }
+
+        [Fact]
+        public void Should_ClearAllStartingWithPrefix()
+        {
+            const string prefix = "prefix";
+
+            var cachePrefixKeys = Enumerable.Range(0, 100)
+                .Select(index => $"{prefix}_{index}")
+                .ToArray();
+
+            foreach (var cacheKey in cachePrefixKeys)
+            {
+                _cacheService.AddCacheItem(cacheKey, _fixture.Create<string>());
+            }
+
+            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
+
+            cacheKeys
+                .Should()
+                .NotBeEmpty();
+
+            cacheKeys.Should().Contain(cachePrefixKeys);
+
+            foreach (var cachePrefixKey in cachePrefixKeys)
+            {
+                _cacheService.Contains(cachePrefixKey)
+                    .Should().BeTrue();
+            }
+
+            _cacheService.ClearAllStartingWith(prefix);
+
+            cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
+
+            cacheKeys
+                .Should()
+                .BeEmpty();
+
+            foreach (var cachePrefixKey in cachePrefixKeys)
+            {
+                _cacheService.Contains(cachePrefixKey)
+                    .Should().BeFalse();
+            }
         }
 
         public void Dispose()
