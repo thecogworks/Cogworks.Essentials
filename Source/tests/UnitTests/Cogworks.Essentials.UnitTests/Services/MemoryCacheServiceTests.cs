@@ -210,6 +210,105 @@ namespace Cogworks.Essentials.UnitTests.Services
                 .Should().BeTrue();
         }
 
+        [Theory]
+        [MemberData(nameof(GetOrAddTestData))]
+        public void Should_GetOrAdd_With_CacheDuration<TResultType>(TResultType expectedValue)
+        {
+            // Arrange
+            var cacheKey = _fixture.Create<string>();
+            var counter = 0;
+
+            Func<TResultType> getValueFunction = () =>
+            {
+                counter++;
+                return expectedValue;
+            };
+
+            // Act
+            var result = _cacheService.GetOrAddCacheItem(cacheKey, getValueFunction, 10);
+            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
+
+            // Assert
+            result.Should().Be(expectedValue);
+            counter.Should().Be(1);
+
+            _cacheService.Contains(cacheKey)
+                .Should().BeTrue();
+
+            cacheKeys
+                .Should().NotBeEmpty();
+
+            cacheKeys.Contains(cacheKey)
+                .Should().BeTrue();
+
+            // Act
+            result = _cacheService.GetOrAddCacheItem(cacheKey, getValueFunction);
+            cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
+
+            // Assert
+            result.Should().Be(expectedValue);
+            counter.Should().Be(1);
+
+            _cacheService.Contains(cacheKey)
+                .Should().BeTrue();
+
+            cacheKeys
+                .Should().NotBeEmpty();
+
+            cacheKeys.Contains(cacheKey)
+                .Should().BeTrue();
+        }
+
+        [Theory]
+        [MemberData(nameof(GetOrAddTestData))]
+        public async Task Should_GetOrAddAsync_With_CacheDuration<TResultType>(TResultType expectedValue)
+        {
+            // Arrange
+            var cacheKey = _fixture.Create<string>();
+            var counter = 0;
+
+            Func<Task<TResultType>> getValueFunction = async () =>
+            {
+                await Task.Delay(50);
+                counter++;
+                return expectedValue;
+            };
+
+            // Act
+            var result = await _cacheService.GetOrAddCacheItemAsync(cacheKey, getValueFunction, 10);
+            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
+
+            // Assert
+            result.Should().Be(expectedValue);
+            counter.Should().Be(1);
+
+            _cacheService.Contains(cacheKey)
+                .Should().BeTrue();
+
+            cacheKeys
+                .Should().NotBeEmpty();
+
+            cacheKeys.Contains(cacheKey)
+                .Should().BeTrue();
+
+            // Act
+            result = await _cacheService.GetOrAddCacheItemAsync(cacheKey, getValueFunction);
+            cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
+
+            // Assert
+            result.Should().Be(expectedValue);
+            counter.Should().Be(1);
+
+            _cacheService.Contains(cacheKey)
+                .Should().BeTrue();
+
+            cacheKeys
+                .Should().NotBeEmpty();
+
+            cacheKeys.Contains(cacheKey)
+                .Should().BeTrue();
+        }
+
         [Fact]
         public void Should_RemoveCacheItem()
         {
@@ -229,6 +328,33 @@ namespace Cogworks.Essentials.UnitTests.Services
                 .BeTrue();
 
             _cacheService.RemoveCacheItem(firstCacheKey);
+
+            cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
+
+            cacheKeys
+                .Should()
+                .BeEmpty();
+
+            _cacheService.Contains(firstCacheKey)
+                .Should()
+                .BeFalse();
+        }
+
+        [Fact]
+        public void Should_Not_ThrowException_On_RemoveCacheItem_When_ItemNotInCache()
+        {
+            var firstCacheKey = _fixture.Create<string>();
+
+            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
+
+            cacheKeys
+                .Should()
+                .BeEmpty();
+
+            var exception = Record.Exception(() =>
+                _cacheService.RemoveCacheItem(firstCacheKey));
+
+            exception.Should().BeNull();
 
             cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
 
@@ -277,6 +403,21 @@ namespace Cogworks.Essentials.UnitTests.Services
         }
 
         [Fact]
+        public void Should_Not_ThrowException_On_ClearingAllCache_When_NoItemsInCache()
+        {
+            var exception = Record.Exception(()
+                => _cacheService.ClearAll());
+
+            exception.Should().BeNull();
+
+            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
+
+            cacheKeys
+                .Should()
+                .BeEmpty();
+        }
+
+        [Fact]
         public void Should_ClearAllStartingWithPrefix()
         {
             const string prefix = "prefix";
@@ -318,6 +459,42 @@ namespace Cogworks.Essentials.UnitTests.Services
                     .Should().BeFalse();
             }
         }
+
+        [Fact]
+        public void Should_Not_ThrowException_On_ClearingAllStartingWithPrefix_When_NoItemsInCache()
+        {
+            const string prefix = "prefix";
+
+            var cachePrefixKeys = Enumerable.Range(0, 100)
+                .Select(index => $"{prefix}_{index}")
+                .ToArray();
+
+            foreach (var cachePrefixKey in cachePrefixKeys)
+            {
+                _cacheService.Contains(cachePrefixKey)
+                    .Should().BeFalse();
+            }
+
+            var exception = Record.Exception(()
+                => _cacheService.ClearAllStartingWith(prefix));
+
+            exception.Should().BeNull();
+
+            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
+
+            cacheKeys
+                .Should()
+                .BeEmpty();
+
+            foreach (var cachePrefixKey in cachePrefixKeys)
+            {
+                _cacheService.Contains(cachePrefixKey)
+                    .Should().BeFalse();
+            }
+        }
+
+        // test for update item in cache with same key
+        // test for parallel invocation
 
         public void Dispose()
             => _inMemoryCache.Dispose();
