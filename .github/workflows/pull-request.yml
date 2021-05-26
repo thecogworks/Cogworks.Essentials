@@ -88,7 +88,12 @@ jobs:
           echo "::set-env name=title::Test Run for PR #${{ steps.PRNUMBER.outputs.pr }} (${{ github.run_number }})"
 
       - name: Run Tests
-        run: dotnet test --no-restore --no-build --configuration ${{ env.CONFIG }} --logger:"liquid.md;LogFileName=${{ env.ReportOutput}}\${{ env.TestReportFileName }};Title=${{ env.Title }};"
+        run: |
+          $solutions = Get-ChildItem -Path . -Recurse -Include *.sln
+
+          foreach ($solutionFile in $solutions){
+            dotnet test "$solutionFile" --no-restore --no-build --configuration ${{ env.CONFIG }} --logger:"liquid.md;LogFileName=${{ env.ReportOutput}}\${{ env.TestReportFileName }};Title=${{ env.Title }};"
+          }
 
       - name: Upload test results
         uses: actions/upload-artifact@v2
