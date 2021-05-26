@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cogworks.Essentials.Constants;
+using Cogworks.Essentials.EventArgs;
 using Cogworks.Essentials.Extensions;
 using Cogworks.Essentials.Services.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
@@ -13,9 +15,9 @@ namespace Cogworks.Essentials.Services
 {
     public class MemoryCacheService : ICacheService, IDisposable
     {
-        private const string CacheKeyList = "CacheKeyList";
-
         private readonly IMemoryCache _memoryCache;
+
+        private ImmutableHashSet<string> _cacheKeys = ImmutableHashSet<string>.Empty;
 
         private static ConcurrentDictionary<object, SemaphoreSlim> Locks => new ConcurrentDictionary<object, SemaphoreSlim>();
 
@@ -34,10 +36,7 @@ namespace Cogworks.Essentials.Services
                 : default;
 
         public void RemoveCacheItem(string cacheKey)
-        {
-            RemoveCacheKeyList(cacheKey);
-            _memoryCache.Remove(cacheKey);
-        }
+            => _memoryCache.Remove(cacheKey);
 
         public void AddCacheItem(string cacheKey, object value, int? cacheDurationInSeconds = null)
         {
@@ -46,7 +45,11 @@ namespace Cogworks.Essentials.Services
             cacheDurationInSeconds ??= DateTimeConstants.TimeInSecondsConstants.Hour;
             var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(cacheDurationInSeconds.Value);
 
-            _memoryCache.Set(cacheKey, value, cacheDurationDateTime);
+            var entryOptions = new MemoryCacheEntryOptions()
+                .SetAbsoluteExpiration(cacheDurationDateTime)
+                .RegisterPostEvictionCallback(CacheCallback);
+
+            _memoryCache.Set(cacheKey, value, entryOptions);
         }
 
         public T GetOrAddCacheItem<T>(string cacheKey, Func<T> getValueFunction, int? cacheDurationInSeconds = null)
@@ -57,6 +60,12 @@ namespace Cogworks.Essentials.Services
                 var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(cacheDurationInSeconds.Value);
 
                 entry.AbsoluteExpiration = cacheDurationDateTime;
+
+                entry.PostEvictionCallbacks.Add(new PostEvictionCallbackRegistration()
+                {
+                    EvictionCallback = CacheCallback
+                });
+
                 AddCacheKeyList(cacheKey);
 
                 return getValueFunction();
@@ -91,7 +100,11 @@ namespace Cogworks.Essentials.Services
                     cacheDurationInSeconds ??= DateTimeConstants.TimeInSecondsConstants.Hour;
                     var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(cacheDurationInSeconds.Value);
 
-                    _memoryCache.Set(cacheKey, cacheEntry, cacheDurationDateTime);
+                    var entryOptions = new MemoryCacheEntryOptions()
+                        .SetAbsoluteExpiration(cacheDurationDateTime)
+                        .RegisterPostEvictionCallback(CacheCallback);
+
+                    _memoryCache.Set(cacheKey, cacheEntry, entryOptions);
                 }
             }
             finally
@@ -105,7 +118,7 @@ namespace Cogworks.Essentials.Services
 
         public void ClearAllStartingWith(string prefixKey)
         {
-            var cacheKeys = GetOrAddCacheKeyList()
+            var cacheKeys = _cacheKeys
                 .Where(x => x.StartsWith(prefixKey))
                 .ToList();
 
@@ -118,15 +131,13 @@ namespace Cogworks.Essentials.Services
             {
                 _memoryCache.Remove(key);
             }
-
-            RemoveCacheKeyList(cacheKeys);
         }
 
         public void ClearAll()
         {
-            var cacheKeys = GetOrAddCacheKeyList();
+            var cacheKeys = _cacheKeys.ToArray();
 
-            if (!cacheKeys.HasAny())
+            if (!_cacheKeys.HasAny())
             {
                 return;
             }
@@ -135,55 +146,43 @@ namespace Cogworks.Essentials.Services
             {
                 _memoryCache.Remove(key);
             }
-
-            RemoveCacheKeyList(cacheKeys);
         }
+
+        public IEnumerable<string> GetKeys()
+            => _cacheKeys.ToList();
 
         public void Dispose()
-            => _memoryCache.Dispose();
+        {
+            _cacheKeys = _cacheKeys.Clear();
+            _memoryCache.Dispose();
+        }
 
         private void AddCacheKeyList(string cacheKey)
-        {
-            var cacheKeyList = GetOrAddCacheKeyList();
-
-            cacheKeyList.AddUnique(cacheKey);
-
-            var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(DateTimeConstants.TimeInSecondsConstants.Year);
-
-            _memoryCache.Set(CacheKeyList, cacheKeyList, cacheDurationDateTime);
-        }
+            => ImmutableInterlocked.Update(
+                ref _cacheKeys,
+                (collection, item) => collection.Add(item),
+                cacheKey);
 
         private void RemoveCacheKeyList(string cacheKey)
+            => ImmutableInterlocked.Update(
+                ref _cacheKeys,
+                (collection, item) => collection.Remove(item),
+                cacheKey);
+
+        private void CacheCallback(object key, object value, EvictionReason reason, object state)
         {
-            var cacheKeyList = GetOrAddCacheKeyList();
-
-            cacheKeyList.Remove(cacheKey);
-
-            UpdateCacheKeyList(cacheKeyList);
-        }
-
-        private void RemoveCacheKeyList(IEnumerable<string> toBeRemovedItems)
-        {
-            var cacheKeys = GetOrAddCacheKeyList();
-
-            cacheKeys = cacheKeys.Except(toBeRemovedItems).ToList();
-
-            UpdateCacheKeyList(cacheKeys);
-        }
-
-        private void UpdateCacheKeyList(IEnumerable<string> cacheKeys)
-            => _memoryCache.Set(
-                CacheKeyList,
-                cacheKeys,
-                DateTime.UtcNow.AddSeconds(DateTimeConstants.TimeInSecondsConstants.Year));
-
-        private List<string> GetOrAddCacheKeyList()
-            => _memoryCache.GetOrCreate(CacheKeyList, entry =>
+            if (reason == EvictionReason.Replaced || key is not string cacheKey)
             {
-                var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(DateTimeConstants.TimeInSecondsConstants.Year);
-                entry.AbsoluteExpiration = cacheDurationDateTime;
+                return;
+            }
 
-                return new List<string>();
-            });
+            CacheEvictionEvent?.Invoke(
+                this,
+                new CacheEvictionArgs(key, value, reason));
+
+            RemoveCacheKeyList(cacheKey);
+        }
+
+        public event EventHandler<CacheEvictionArgs> CacheEvictionEvent;
     }
 }

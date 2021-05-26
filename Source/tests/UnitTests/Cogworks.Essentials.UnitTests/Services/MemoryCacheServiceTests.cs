@@ -13,10 +13,10 @@ using Xunit;
 
 namespace Cogworks.Essentials.UnitTests.Services
 {
+    [CollectionDefinition("Memory Cache Service tests", DisableParallelization = false)]
+    [Collection("Memory Cache Service tests")]
     public class MemoryCacheServiceTests : IDisposable
     {
-        private const string CacheKeyList = "CacheKeyList";
-
         private readonly IMemoryCache _inMemoryCache;
         private readonly ICacheService _cacheService;
         private readonly IFixture _fixture;
@@ -38,7 +38,6 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             // Act
             _cacheService.AddCacheItem(cacheKey, cacheValue);
-            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
 
             // Assert
             _cacheService.Contains(cacheKey)
@@ -46,12 +45,6 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             _cacheService.GetCacheItem<string>(cacheKey)
                 .Should().Be(cacheValue);
-
-            cacheKeys
-                .Should().NotBeEmpty();
-
-            cacheKeys.Contains(cacheKey)
-                .Should().BeTrue();
         }
 
         [Fact]
@@ -63,7 +56,6 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             // Act
             _cacheService.AddCacheItem(cacheKey, cacheValue, 5);
-            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
 
             // Assert
             _cacheService.Contains(cacheKey)
@@ -71,12 +63,6 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             _cacheService.GetCacheItem<string>(cacheKey)
                 .Should().Be(cacheValue);
-
-            cacheKeys
-                .Should().NotBeEmpty();
-
-            cacheKeys.Contains(cacheKey)
-                .Should().BeTrue();
         }
 
         public static IEnumerable<object[]> DefaultTestData => new List<object[]>
@@ -127,36 +113,22 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             // Act
             var result = _cacheService.GetOrAddCacheItem(cacheKey, getValueFunction);
-            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
 
             // Assert
             result.Should().Be(expectedValue);
             counter.Should().Be(1);
 
             _cacheService.Contains(cacheKey)
-                .Should().BeTrue();
-
-            cacheKeys
-                .Should().NotBeEmpty();
-
-            cacheKeys.Contains(cacheKey)
                 .Should().BeTrue();
 
             // Act
             result = _cacheService.GetOrAddCacheItem(cacheKey, getValueFunction);
-            cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
 
             // Assert
             result.Should().Be(expectedValue);
             counter.Should().Be(1);
 
             _cacheService.Contains(cacheKey)
-                .Should().BeTrue();
-
-            cacheKeys
-                .Should().NotBeEmpty();
-
-            cacheKeys.Contains(cacheKey)
                 .Should().BeTrue();
         }
 
@@ -177,36 +149,22 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             // Act
             var result = await _cacheService.GetOrAddCacheItemAsync(cacheKey, getValueFunction);
-            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
 
             // Assert
             result.Should().Be(expectedValue);
             counter.Should().Be(1);
 
             _cacheService.Contains(cacheKey)
-                .Should().BeTrue();
-
-            cacheKeys
-                .Should().NotBeEmpty();
-
-            cacheKeys.Contains(cacheKey)
                 .Should().BeTrue();
 
             // Act
             result = await _cacheService.GetOrAddCacheItemAsync(cacheKey, getValueFunction);
-            cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
 
             // Assert
             result.Should().Be(expectedValue);
             counter.Should().Be(1);
 
             _cacheService.Contains(cacheKey)
-                .Should().BeTrue();
-
-            cacheKeys
-                .Should().NotBeEmpty();
-
-            cacheKeys.Contains(cacheKey)
                 .Should().BeTrue();
         }
 
@@ -226,36 +184,22 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             // Act
             var result = _cacheService.GetOrAddCacheItem(cacheKey, getValueFunction, 10);
-            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
 
             // Assert
             result.Should().Be(expectedValue);
             counter.Should().Be(1);
 
             _cacheService.Contains(cacheKey)
-                .Should().BeTrue();
-
-            cacheKeys
-                .Should().NotBeEmpty();
-
-            cacheKeys.Contains(cacheKey)
                 .Should().BeTrue();
 
             // Act
             result = _cacheService.GetOrAddCacheItem(cacheKey, getValueFunction);
-            cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
 
             // Assert
             result.Should().Be(expectedValue);
             counter.Should().Be(1);
 
             _cacheService.Contains(cacheKey)
-                .Should().BeTrue();
-
-            cacheKeys
-                .Should().NotBeEmpty();
-
-            cacheKeys.Contains(cacheKey)
                 .Should().BeTrue();
         }
 
@@ -276,36 +220,22 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             // Act
             var result = await _cacheService.GetOrAddCacheItemAsync(cacheKey, getValueFunction, 10);
-            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
 
             // Assert
             result.Should().Be(expectedValue);
             counter.Should().Be(1);
 
             _cacheService.Contains(cacheKey)
-                .Should().BeTrue();
-
-            cacheKeys
-                .Should().NotBeEmpty();
-
-            cacheKeys.Contains(cacheKey)
                 .Should().BeTrue();
 
             // Act
             result = await _cacheService.GetOrAddCacheItemAsync(cacheKey, getValueFunction);
-            cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
 
             // Assert
             result.Should().Be(expectedValue);
             counter.Should().Be(1);
 
             _cacheService.Contains(cacheKey)
-                .Should().BeTrue();
-
-            cacheKeys
-                .Should().NotBeEmpty();
-
-            cacheKeys.Contains(cacheKey)
                 .Should().BeTrue();
         }
 
@@ -317,23 +247,7 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             _cacheService.AddCacheItem(firstCacheKey, firstCacheValue);
 
-            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
-
-            cacheKeys
-                .Should()
-                .NotBeEmpty();
-
-            cacheKeys.Contains(firstCacheKey)
-                .Should()
-                .BeTrue();
-
             _cacheService.RemoveCacheItem(firstCacheKey);
-
-            cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
-
-            cacheKeys
-                .Should()
-                .BeEmpty();
 
             _cacheService.Contains(firstCacheKey)
                 .Should()
@@ -345,22 +259,10 @@ namespace Cogworks.Essentials.UnitTests.Services
         {
             var firstCacheKey = _fixture.Create<string>();
 
-            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
-
-            cacheKeys
-                .Should()
-                .BeEmpty();
-
             var exception = Record.Exception(() =>
                 _cacheService.RemoveCacheItem(firstCacheKey));
 
             exception.Should().BeNull();
-
-            cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
-
-            cacheKeys
-                .Should()
-                .BeEmpty();
 
             _cacheService.Contains(firstCacheKey)
                 .Should()
@@ -379,19 +281,15 @@ namespace Cogworks.Essentials.UnitTests.Services
             _cacheService.AddCacheItem(firstCacheKey, firstCacheValue);
             _cacheService.AddCacheItem(secondCacheKey, secondCacheValue);
 
-            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
-
-            cacheKeys
+            _cacheService.Contains(firstCacheKey)
                 .Should()
-                .NotBeEmpty();
+                .BeTrue();
+
+            _cacheService.Contains(secondCacheKey)
+                .Should()
+                .BeTrue();
 
             _cacheService.ClearAll();
-
-            cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
-
-            cacheKeys
-                .Should()
-                .BeEmpty();
 
             _cacheService.Contains(firstCacheKey)
                 .Should()
@@ -404,18 +302,9 @@ namespace Cogworks.Essentials.UnitTests.Services
 
         [Fact]
         public void Should_Not_ThrowException_On_ClearingAllCache_When_NoItemsInCache()
-        {
-            var exception = Record.Exception(()
-                => _cacheService.ClearAll());
-
-            exception.Should().BeNull();
-
-            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
-
-            cacheKeys
-                .Should()
-                .BeEmpty();
-        }
+            => Record
+                .Exception(() => _cacheService.ClearAll())
+                .Should().BeNull();
 
         [Fact]
         public void Should_ClearAllStartingWithPrefix()
@@ -431,14 +320,6 @@ namespace Cogworks.Essentials.UnitTests.Services
                 _cacheService.AddCacheItem(cacheKey, _fixture.Create<string>());
             }
 
-            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
-
-            cacheKeys
-                .Should()
-                .NotBeEmpty();
-
-            cacheKeys.Should().Contain(cachePrefixKeys);
-
             foreach (var cachePrefixKey in cachePrefixKeys)
             {
                 _cacheService.Contains(cachePrefixKey)
@@ -446,12 +327,6 @@ namespace Cogworks.Essentials.UnitTests.Services
             }
 
             _cacheService.ClearAllStartingWith(prefix);
-
-            cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
-
-            cacheKeys
-                .Should()
-                .BeEmpty();
 
             foreach (var cachePrefixKey in cachePrefixKeys)
             {
@@ -480,12 +355,6 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             exception.Should().BeNull();
 
-            var cacheKeys = _cacheService.GetCacheItem<List<string>>(CacheKeyList);
-
-            cacheKeys
-                .Should()
-                .BeEmpty();
-
             foreach (var cachePrefixKey in cachePrefixKeys)
             {
                 _cacheService.Contains(cachePrefixKey)
@@ -493,8 +362,235 @@ namespace Cogworks.Essentials.UnitTests.Services
             }
         }
 
-        // test for update item in cache with same key
-        // test for parallel invocation
+        public static IEnumerable<object[]> UpdateTestData => new List<object[]>
+        {
+            new object[] { "value", "updateValue" },
+            new object[] { 123, 234 },
+            new object[] { new TestObject("123"), new TestObject("234") },
+            new object[] { 123, "234" },
+        };
+
+        [Theory]
+        [MemberData(nameof(UpdateTestData))]
+        public void Should_UpdateExistingItemValue<TInput, TUpdate>(TInput input, TUpdate update)
+        {
+            var cacheKey = _fixture.Create<string>();
+
+            _cacheService.AddCacheItem(cacheKey, input);
+
+            var inputResult = _cacheService.GetCacheItem<TInput>(cacheKey);
+
+            inputResult.Should().Be(input).And.BeOfType<TInput>();
+
+            _cacheService.AddCacheItem(cacheKey, update);
+
+            var outputResult = _cacheService.GetCacheItem<TUpdate>(cacheKey);
+
+            outputResult.Should()
+                .Be(outputResult)
+                .And
+                .BeOfType<TUpdate>()
+                .And
+                .NotBe(inputResult);
+        }
+
+        [Theory]
+        [MemberData(nameof(UpdateTestData))]
+        public async Task Should_UpdateExistingItemValueAsync<TInput, TUpdate>(TInput input, TUpdate update)
+        {
+            var cacheKey = _fixture.Create<string>();
+
+            var inputResult = await _cacheService.GetOrAddCacheItemAsync<TInput>(
+                cacheKey,
+                () => Task.FromResult(input));
+
+            inputResult.Should().Be(input).And.BeOfType<TInput>();
+
+            _cacheService.AddCacheItem(cacheKey, update);
+
+            var outputResult = await _cacheService.GetOrAddCacheItemAsync<TUpdate>(
+                cacheKey,
+                () => Task.FromResult(update));
+
+            outputResult.Should()
+                .Be(outputResult)
+                .And
+                .BeOfType<TUpdate>()
+                .And
+                .NotBe(inputResult);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(10)]
+        public void Should_AddItems_When_LongThreadOperations(int threadsSize)
+        {
+            var cacheInputs = Enumerable.Range(0, threadsSize)
+                .Select(index => new
+                {
+                    CacheKey = $"cache_key_{index}",
+                    CacheValue = index
+                })
+                .ToArray();
+
+            var cacheActions = cacheInputs
+                .Select(x =>
+                    Task.Run(()
+                        => _cacheService.GetOrAddCacheItemAsync(
+                            x.CacheKey,
+                            async () =>
+                            {
+                                await Task.Delay(x.CacheValue * 1000);
+                                return x.CacheValue;
+                            })))
+                .ToArray();
+
+            Task.WaitAll(cacheActions);
+
+            foreach (var cacheInput in cacheInputs)
+            {
+                _cacheService.Contains(cacheInput.CacheKey).Should().BeTrue();
+                var cacheItem = _cacheService.GetCacheItem<int>(cacheInput.CacheKey);
+
+                cacheItem.Should().Be(cacheInput.CacheValue);
+            }
+        }
+
+        [Fact]
+        public async Task Should_RemoveCacheKeyFromCacheKeysList_When_RemoveItemFromCache()
+        {
+            var cacheKey = _fixture.Create<string>();
+            var cacheValue = _fixture.Create<string>();
+
+            _cacheService.AddCacheItem(cacheKey, cacheValue, 2);
+
+            _cacheService.Contains(cacheKey).Should().BeTrue();
+
+            _cacheService.RemoveCacheItem(cacheKey);
+
+            await Task.Delay(500);
+
+            _cacheService.Contains(cacheKey).Should().BeFalse();
+
+            var memoryCacheService = _cacheService as MemoryCacheService;
+
+            memoryCacheService.GetKeys().Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task Should_RemoveCacheKeyFromCacheKeysList_When_CacheItemExpired()
+        {
+            var cacheKey = _fixture.Create<string>();
+            var cacheValue = _fixture.Create<string>();
+
+            var memoryCacheService = _cacheService as MemoryCacheService;
+
+            var counter = 0;
+
+            memoryCacheService.CacheEvictionEvent += (_, args) =>
+            {
+                counter++;
+
+                args.EvictionReason.Should().Be(EvictionReason.Expired);
+            };
+
+            memoryCacheService.AddCacheItem(cacheKey, cacheValue, 1);
+
+            memoryCacheService.Contains(cacheKey).Should().BeTrue();
+
+            var delayCount = 2000;
+
+            do
+            {
+                delayCount -= 100;
+                await Task.Delay(100);
+            }
+            while (delayCount > 0);
+
+            memoryCacheService.Contains(cacheKey).Should().BeFalse();
+
+            await Task.Delay(1000);
+
+            counter.Should().BeGreaterThan(0);
+            memoryCacheService.GetKeys().Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task Should_RemoveCacheKeyFromCacheKeysList_When_CacheItemExpired_On_GetOrAdd()
+        {
+            var cacheKey = _fixture.Create<string>();
+            var cacheValue = _fixture.Create<string>();
+
+            var memoryCacheService = _cacheService as MemoryCacheService;
+
+            var counter = 0;
+
+            memoryCacheService.CacheEvictionEvent += (_, args) =>
+            {
+                counter++;
+
+                args.EvictionReason.Should().Be(EvictionReason.Expired);
+            };
+
+            memoryCacheService.GetOrAddCacheItem<string>(cacheKey, () => cacheValue, 1);
+
+            memoryCacheService.Contains(cacheKey).Should().BeTrue();
+
+            var delayCount = 2000;
+
+            do
+            {
+                delayCount -= 100;
+                await Task.Delay(100);
+            }
+            while (delayCount > 0);
+
+            memoryCacheService.Contains(cacheKey).Should().BeFalse();
+
+            await Task.Delay(1000);
+
+            counter.Should().BeGreaterThan(0);
+            memoryCacheService.GetKeys().Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task Should_RemoveCacheKeyFromCacheKeysList_When_CacheItemExpired_On_GetOrAddAsync()
+        {
+            var cacheKey = _fixture.Create<string>();
+            var cacheValue = _fixture.Create<string>();
+
+            var memoryCacheService = _cacheService as MemoryCacheService;
+
+            var counter = 0;
+
+            memoryCacheService.CacheEvictionEvent += (_, args) =>
+            {
+                counter++;
+
+                args.EvictionReason.Should().Be(EvictionReason.Expired);
+            };
+
+            await memoryCacheService.GetOrAddCacheItemAsync<string>(cacheKey, () => Task.FromResult(cacheValue), 1);
+
+            memoryCacheService.Contains(cacheKey).Should().BeTrue();
+
+            var delayCount = 2000;
+
+            do
+            {
+                delayCount -= 100;
+                await Task.Delay(100);
+            }
+            while (delayCount > 0);
+
+            memoryCacheService.Contains(cacheKey).Should().BeFalse();
+
+            await Task.Delay(2000);
+
+            counter.Should().BeGreaterThan(0);
+            memoryCacheService.GetKeys().Should().BeEmpty();
+        }
 
         public void Dispose()
             => _inMemoryCache.Dispose();
