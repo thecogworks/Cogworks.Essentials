@@ -40,7 +40,7 @@ namespace Cogworks.Essentials.Services
 
         public void AddCacheItem(string cacheKey, object value, int? cacheDurationInSeconds = null)
         {
-            AddCacheKeyList(cacheKey);
+            AddCacheKeyToCacheKeysDefinitions(cacheKey);
 
             cacheDurationInSeconds ??= DateTimeConstants.TimeInSecondsConstants.Hour;
             var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(cacheDurationInSeconds.Value);
@@ -66,7 +66,7 @@ namespace Cogworks.Essentials.Services
                     EvictionCallback = CacheCallback
                 });
 
-                AddCacheKeyList(cacheKey);
+                AddCacheKeyToCacheKeysDefinitions(cacheKey);
 
                 return getValueFunction();
             });
@@ -112,7 +112,7 @@ namespace Cogworks.Essentials.Services
                 myLock.Release();
             }
 
-            AddCacheKeyList(cacheKey);
+            AddCacheKeyToCacheKeysDefinitions(cacheKey);
             return cacheEntry;
         }
 
@@ -157,13 +157,13 @@ namespace Cogworks.Essentials.Services
             _memoryCache.Dispose();
         }
 
-        private void AddCacheKeyList(string cacheKey)
+        private void AddCacheKeyToCacheKeysDefinitions(string cacheKey)
             => ImmutableInterlocked.Update(
                 ref _cacheKeys,
                 (collection, item) => collection.Add(item),
                 cacheKey);
 
-        private void RemoveCacheKeyList(string cacheKey)
+        private void RemoveCacheKeyFromCacheKeysDefinitions(string cacheKey)
             => ImmutableInterlocked.Update(
                 ref _cacheKeys,
                 (collection, item) => collection.Remove(item),
@@ -180,7 +180,7 @@ namespace Cogworks.Essentials.Services
                 this,
                 new CacheEvictionArgs(key, value, reason));
 
-            RemoveCacheKeyList(cacheKey);
+            RemoveCacheKeyFromCacheKeysDefinitions(cacheKey);
         }
 
         public event EventHandler<CacheEvictionArgs> CacheEvictionEvent;
