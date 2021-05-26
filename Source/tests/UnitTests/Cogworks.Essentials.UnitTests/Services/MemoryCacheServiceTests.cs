@@ -592,6 +592,39 @@ namespace Cogworks.Essentials.UnitTests.Services
             memoryCacheService.GetKeys().Should().BeEmpty();
         }
 
+        [Fact]
+        public void Should_Return_True_When_CacheContainsItem()
+        {
+            var cacheKey = _fixture.Create<string>();
+            var cacheValue = _fixture.Create<string>();
+
+            _cacheService.AddCacheItem(cacheKey, cacheValue);
+
+            _cacheService.Contains(cacheKey).Should().BeTrue();
+        }
+
+        [Fact]
+        public void Should_Return_False_When_CacheDoesNotContainsItem()
+        {
+            var cacheKey = _fixture.Create<string>();
+
+            _cacheService.Contains(cacheKey).Should().BeFalse();
+        }
+
+        [Fact]
+        public void Should_DisposeCache()
+        {
+            var memoryCacheService = _cacheService as MemoryCacheService;
+
+            memoryCacheService.AddCacheItem(
+                _fixture.Create<string>(),
+                _fixture.Create<string>());
+
+            memoryCacheService.Dispose();
+
+            memoryCacheService.GetKeys().Should().BeEmpty();
+        }
+
         public void Dispose()
             => _inMemoryCache.Dispose();
     }
