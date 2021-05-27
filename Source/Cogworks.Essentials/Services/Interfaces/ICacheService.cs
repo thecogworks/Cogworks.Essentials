@@ -21,5 +21,7 @@ namespace Cogworks.Essentials.Services.Interfaces
         void ClearAll();
 
         void ClearAllStartingWith(string keyPrefix);
+
+        bool TryGetValue<T>(string key, out T value);
     }
 }

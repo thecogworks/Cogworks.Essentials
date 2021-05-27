@@ -681,6 +681,70 @@ namespace Cogworks.Essentials.UnitTests.Services
             memoryCacheService.GetKeys().Should().BeEmpty();
         }
 
+        [Fact]
+        public void Should_Return_True_On_TryGetValue_When_ItemExists()
+        {
+            // Arrange
+            var cacheKey = _fixture.Create<string>();
+            var cacheValue = _fixture.Create<string>();
+
+            // Act
+            _cacheService.Add(cacheKey, cacheValue);
+
+            // Act + Arrange
+            _cacheService.TryGetValue<string>(cacheKey, out var value)
+                .Should().BeTrue();
+
+            value.Should().NotBeNull().And.Be(cacheValue);
+        }
+
+        public static IEnumerable<object[]> TryGetValueNotExistingData => new List<object[]>
+        {
+            new object[] { default(string) },
+            new object[] { default(int) },
+            new object[] { default(TestObject) },
+            new object[] { default },
+        };
+
+        [Theory]
+        [MemberData(nameof(TryGetValueNotExistingData))]
+        public void Should_Return_False_TryGetValue_When_ItemNotExists<TOutput>(TOutput expectedOutput)
+        {
+            // Arrange
+            var cacheKey = _fixture.Create<string>();
+
+            // Act + Arrange
+            _cacheService.TryGetValue<TOutput>(cacheKey, out var value)
+                .Should().BeFalse();
+
+            value.Should().Be(expectedOutput);
+        }
+
+        public static IEnumerable<object[]> TryGetValueNotMatchedTypeData => new List<object[]>
+        {
+            new object[] { "value", default(byte) },
+            new object[] { 123, default(byte) },
+            new object[] { new TestObject("key"), default(byte) },
+            new object[] { true, default(int) },
+        };
+
+        [Theory]
+        [MemberData(nameof(TryGetValueNotMatchedTypeData))]
+        public void Should_Return_False_On_TryGetValue_When_ItemIsNotConvertible<TInput, TOutput>(TInput cacheValue, TOutput _)
+        {
+            // Arrange
+            var cacheKey = _fixture.Create<string>();
+
+            // Act
+            _cacheService.Add(cacheKey, cacheValue);
+
+            // Act + Arrange
+            _cacheService.TryGetValue<TOutput>(cacheKey, out var value)
+                .Should().BeFalse();
+
+            value.Should().NotBeAssignableTo<TInput>();
+        }
+
         public void Dispose()
             => _inMemoryCache.Dispose();
     }

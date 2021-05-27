@@ -133,6 +133,9 @@ namespace Cogworks.Essentials.Services
             }
         }
 
+        public bool TryGetValue<T>(string key, out T value)
+            => _memoryCache.TryGetValue(key, out value);
+
         public void ClearAll()
         {
             var cacheKeys = _cacheKeys.ToArray();
