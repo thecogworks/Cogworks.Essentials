@@ -7,7 +7,7 @@ namespace Cogworks.Essentials.Services.Interfaces
     {
         T GetOrAddCacheItem<T>(string cacheKey, Func<T> getValueFunction, int? cacheDurationInSeconds = null);
 
-        Task<T> MultiThreadProofGetOrAddCacheItem<T>(string cacheKey, Func<Task<T>> getValueFunction,
+        Task<T> GetOrAddCacheItemAsync<T>(string cacheKey, Func<Task<T>> getValueFunction,
             int? cacheDurationInSeconds = null);
 
         T GetCacheItem<T>(string cacheKey);
@@ -17,5 +17,9 @@ namespace Cogworks.Essentials.Services.Interfaces
         void RemoveCacheItem(string cacheKey);
 
         bool Contains(string cacheKey);
+
+        void ClearAll();
+
+        void ClearAllStartingWith(string prefixKey);
     }
 }
