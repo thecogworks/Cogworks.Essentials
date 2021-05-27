@@ -5,21 +5,21 @@ namespace Cogworks.Essentials.Services.Interfaces
 {
     public interface ICacheService
     {
-        T GetOrAddCacheItem<T>(string cacheKey, Func<T> getValueFunction, int? cacheDurationInSeconds = null);
+        T GetOrAdd<T>(string key, Func<T> getValueFunction, int? cacheDurationInSeconds = null);
 
-        Task<T> GetOrAddCacheItemAsync<T>(string cacheKey, Func<Task<T>> getValueFunction,
+        Task<T> GetOrAddAsync<T>(string key, Func<Task<T>> getValueFunction,
             int? cacheDurationInSeconds = null);
 
-        T GetCacheItem<T>(string cacheKey);
+        T Get<T>(string key);
 
-        void AddCacheItem(string cacheKey, object value, int? cacheDurationInSeconds = null);
+        void Add(string key, object value, int? cacheDurationInSeconds = null);
 
-        void RemoveCacheItem(string cacheKey);
+        void Remove(string key);
 
-        bool Contains(string cacheKey);
+        bool Contains(string key);
 
         void ClearAll();
 
-        void ClearAllStartingWith(string prefixKey);
+        void ClearAllStartingWith(string keyPrefix);
     }
 }
