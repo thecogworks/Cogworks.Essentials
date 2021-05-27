@@ -37,13 +37,13 @@ namespace Cogworks.Essentials.UnitTests.Services
             var cacheValue = _fixture.Create<string>();
 
             // Act
-            _cacheService.AddCacheItem(cacheKey, cacheValue);
+            _cacheService.Add(cacheKey, cacheValue);
 
             // Assert
             _cacheService.Contains(cacheKey)
                 .Should().BeTrue();
 
-            _cacheService.GetCacheItem<string>(cacheKey)
+            _cacheService.Get<string>(cacheKey)
                 .Should().Be(cacheValue);
         }
 
@@ -55,13 +55,13 @@ namespace Cogworks.Essentials.UnitTests.Services
             var cacheValue = _fixture.Create<string>();
 
             // Act
-            _cacheService.AddCacheItem(cacheKey, cacheValue, 5);
+            _cacheService.Add(cacheKey, cacheValue, 5);
 
             // Assert
             _cacheService.Contains(cacheKey)
                 .Should().BeTrue();
 
-            _cacheService.GetCacheItem<string>(cacheKey)
+            _cacheService.Get<string>(cacheKey)
                 .Should().Be(cacheValue);
         }
 
@@ -81,7 +81,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             var cacheKey = _fixture.Create<string>();
 
             // Act
-            var result = _cacheService.GetCacheItem<TOutput>(cacheKey);
+            var result = _cacheService.Get<TOutput>(cacheKey);
 
             // Assert
             result.Should().Be(expected);
@@ -112,7 +112,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             };
 
             // Act
-            var result = _cacheService.GetOrAddCacheItem(cacheKey, getValueFunction);
+            var result = _cacheService.GetOrAdd(cacheKey, getValueFunction);
 
             // Assert
             result.Should().Be(expectedValue);
@@ -122,7 +122,7 @@ namespace Cogworks.Essentials.UnitTests.Services
                 .Should().BeTrue();
 
             // Act
-            result = _cacheService.GetOrAddCacheItem(cacheKey, getValueFunction);
+            result = _cacheService.GetOrAdd(cacheKey, getValueFunction);
 
             // Assert
             result.Should().Be(expectedValue);
@@ -148,7 +148,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             };
 
             // Act
-            var result = await _cacheService.GetOrAddCacheItemAsync(cacheKey, getValueFunction);
+            var result = await _cacheService.GetOrAddAsync(cacheKey, getValueFunction);
 
             // Assert
             result.Should().Be(expectedValue);
@@ -158,7 +158,7 @@ namespace Cogworks.Essentials.UnitTests.Services
                 .Should().BeTrue();
 
             // Act
-            result = await _cacheService.GetOrAddCacheItemAsync(cacheKey, getValueFunction);
+            result = await _cacheService.GetOrAddAsync(cacheKey, getValueFunction);
 
             // Assert
             result.Should().Be(expectedValue);
@@ -183,7 +183,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             };
 
             // Act
-            var result = _cacheService.GetOrAddCacheItem(cacheKey, getValueFunction, 10);
+            var result = _cacheService.GetOrAdd(cacheKey, getValueFunction, 10);
 
             // Assert
             result.Should().Be(expectedValue);
@@ -193,7 +193,7 @@ namespace Cogworks.Essentials.UnitTests.Services
                 .Should().BeTrue();
 
             // Act
-            result = _cacheService.GetOrAddCacheItem(cacheKey, getValueFunction);
+            result = _cacheService.GetOrAdd(cacheKey, getValueFunction);
 
             // Assert
             result.Should().Be(expectedValue);
@@ -219,7 +219,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             };
 
             // Act
-            var result = await _cacheService.GetOrAddCacheItemAsync(cacheKey, getValueFunction, 10);
+            var result = await _cacheService.GetOrAddAsync(cacheKey, getValueFunction, 10);
 
             // Assert
             result.Should().Be(expectedValue);
@@ -229,7 +229,7 @@ namespace Cogworks.Essentials.UnitTests.Services
                 .Should().BeTrue();
 
             // Act
-            result = await _cacheService.GetOrAddCacheItemAsync(cacheKey, getValueFunction);
+            result = await _cacheService.GetOrAddAsync(cacheKey, getValueFunction);
 
             // Assert
             result.Should().Be(expectedValue);
@@ -247,9 +247,9 @@ namespace Cogworks.Essentials.UnitTests.Services
             var firstCacheValue = _fixture.Create<string>();
 
             // Act
-            _cacheService.AddCacheItem(firstCacheKey, firstCacheValue);
+            _cacheService.Add(firstCacheKey, firstCacheValue);
 
-            _cacheService.RemoveCacheItem(firstCacheKey);
+            _cacheService.Remove(firstCacheKey);
 
             // Assert
             _cacheService.Contains(firstCacheKey)
@@ -265,7 +265,7 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             // Act
             var exception = Record.Exception(() =>
-                _cacheService.RemoveCacheItem(firstCacheKey));
+                _cacheService.Remove(firstCacheKey));
 
             // Assert
             exception.Should().BeNull();
@@ -286,8 +286,8 @@ namespace Cogworks.Essentials.UnitTests.Services
             var secondCacheValue = _fixture.Create<string>();
 
             // Act
-            _cacheService.AddCacheItem(firstCacheKey, firstCacheValue);
-            _cacheService.AddCacheItem(secondCacheKey, secondCacheValue);
+            _cacheService.Add(firstCacheKey, firstCacheValue);
+            _cacheService.Add(secondCacheKey, secondCacheValue);
 
             // Assert
             _cacheService.Contains(firstCacheKey)
@@ -330,7 +330,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             // Act
             foreach (var cacheKey in cachePrefixKeys)
             {
-                _cacheService.AddCacheItem(cacheKey, _fixture.Create<string>());
+                _cacheService.Add(cacheKey, _fixture.Create<string>());
             }
 
             // Assert
@@ -397,18 +397,18 @@ namespace Cogworks.Essentials.UnitTests.Services
             var cacheKey = _fixture.Create<string>();
 
             // Act
-            _cacheService.AddCacheItem(cacheKey, input);
+            _cacheService.Add(cacheKey, input);
 
             // Assert
-            var inputResult = _cacheService.GetCacheItem<TInput>(cacheKey);
+            var inputResult = _cacheService.Get<TInput>(cacheKey);
 
             inputResult.Should().Be(input).And.BeOfType<TInput>();
 
             // Act
-            _cacheService.AddCacheItem(cacheKey, update);
+            _cacheService.Add(cacheKey, update);
 
             // Assert
-            var outputResult = _cacheService.GetCacheItem<TUpdate>(cacheKey);
+            var outputResult = _cacheService.Get<TUpdate>(cacheKey);
 
             outputResult.Should()
                 .Be(outputResult)
@@ -426,7 +426,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             var cacheKey = _fixture.Create<string>();
 
             // Act
-            var inputResult = await _cacheService.GetOrAddCacheItemAsync<TInput>(
+            var inputResult = await _cacheService.GetOrAddAsync<TInput>(
                 cacheKey,
                 () => Task.FromResult(input));
 
@@ -434,9 +434,9 @@ namespace Cogworks.Essentials.UnitTests.Services
             inputResult.Should().Be(input).And.BeOfType<TInput>();
 
             // Act
-            _cacheService.AddCacheItem(cacheKey, update);
+            _cacheService.Add(cacheKey, update);
 
-            var outputResult = await _cacheService.GetOrAddCacheItemAsync<TUpdate>(
+            var outputResult = await _cacheService.GetOrAddAsync<TUpdate>(
                 cacheKey,
                 () => Task.FromResult(update));
 
@@ -468,7 +468,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             var cacheActions = cacheInputs
                 .Select(x =>
                     Task.Run(()
-                        => _cacheService.GetOrAddCacheItemAsync(
+                        => _cacheService.GetOrAddAsync(
                             x.CacheKey,
                             async () =>
                             {
@@ -483,7 +483,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             foreach (var cacheInput in cacheInputs)
             {
                 _cacheService.Contains(cacheInput.CacheKey).Should().BeTrue();
-                var cacheItem = _cacheService.GetCacheItem<int>(cacheInput.CacheKey);
+                var cacheItem = _cacheService.Get<int>(cacheInput.CacheKey);
 
                 cacheItem.Should().Be(cacheInput.CacheValue);
             }
@@ -497,13 +497,13 @@ namespace Cogworks.Essentials.UnitTests.Services
             var cacheValue = _fixture.Create<string>();
 
             // Act
-            _cacheService.AddCacheItem(cacheKey, cacheValue, 2);
+            _cacheService.Add(cacheKey, cacheValue, 2);
 
             // Assert
             _cacheService.Contains(cacheKey).Should().BeTrue();
 
             // Act
-            _cacheService.RemoveCacheItem(cacheKey);
+            _cacheService.Remove(cacheKey);
 
             await Task.Delay(200);
 
@@ -535,7 +535,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             };
 
             // Act
-            memoryCacheService.AddCacheItem(cacheKey, cacheValue, 1);
+            memoryCacheService.Add(cacheKey, cacheValue, 1);
 
             memoryCacheService.Contains(cacheKey).Should().BeTrue();
 
@@ -576,7 +576,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             };
 
             // Act
-            memoryCacheService.GetOrAddCacheItem<string>(cacheKey, () => cacheValue, 1);
+            memoryCacheService.GetOrAdd<string>(cacheKey, () => cacheValue, 1);
 
             // Assert
             memoryCacheService.Contains(cacheKey).Should().BeTrue();
@@ -618,7 +618,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             };
 
             // Act
-            await memoryCacheService.GetOrAddCacheItemAsync<string>(cacheKey, () => Task.FromResult(cacheValue), 1);
+            await memoryCacheService.GetOrAddAsync<string>(cacheKey, () => Task.FromResult(cacheValue), 1);
 
             // Assert
             memoryCacheService.Contains(cacheKey).Should().BeTrue();
@@ -648,7 +648,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             var cacheValue = _fixture.Create<string>();
 
             // Act
-            _cacheService.AddCacheItem(cacheKey, cacheValue);
+            _cacheService.Add(cacheKey, cacheValue);
 
             // Assert
             _cacheService.Contains(cacheKey).Should().BeTrue();
@@ -671,7 +671,7 @@ namespace Cogworks.Essentials.UnitTests.Services
             var memoryCacheService = _cacheService as MemoryCacheService;
 
             // Act
-            memoryCacheService.AddCacheItem(
+            memoryCacheService.Add(
                 _fixture.Create<string>(),
                 _fixture.Create<string>());
 
@@ -679,6 +679,84 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             // Assert
             memoryCacheService.GetKeys().Should().BeEmpty();
+        }
+
+        [Fact]
+        public void Should_Return_True_On_TryGetValue_When_ItemExists()
+        {
+            // Arrange
+            var cacheKey = _fixture.Create<string>();
+            var cacheValue = _fixture.Create<string>();
+
+            // Act
+            _cacheService.Add(cacheKey, cacheValue);
+
+            // Act + Arrange
+            _cacheService.TryGetValue<string>(cacheKey, out var value)
+                .Should().BeTrue();
+
+            value.Should().NotBeNull().And.Be(cacheValue);
+        }
+
+        public static IEnumerable<object[]> TryGetValueNotExistingData => new List<object[]>
+        {
+            new object[] { default(string) },
+            new object[] { default(int) },
+            new object[] { default(TestObject) },
+            new object[] { default },
+        };
+
+        [Theory]
+        [MemberData(nameof(TryGetValueNotExistingData))]
+        public void Should_Return_False_TryGetValue_When_ItemNotExists<TOutput>(TOutput expectedOutput)
+        {
+            // Arrange
+            var cacheKey = _fixture.Create<string>();
+
+            // Act + Arrange
+            _cacheService.TryGetValue<TOutput>(cacheKey, out var value)
+                .Should().BeFalse();
+
+            value.Should().Be(expectedOutput);
+        }
+
+        public static IEnumerable<object[]> TryGetValueNotMatchedTypeData => new List<object[]>
+        {
+            new object[] { "value", default(byte) },
+            new object[] { 123, default(byte) },
+            new object[] { new TestObject("key"), default(byte) },
+            new object[] { true, default(int) },
+        };
+
+        [Theory]
+        [MemberData(nameof(TryGetValueNotMatchedTypeData))]
+        public void Should_Return_False_On_TryGetValue_When_ItemIsNotConvertible<TInput, TOutput>(TInput cacheValue, TOutput _)
+        {
+            // Arrange
+            var cacheKey = _fixture.Create<string>();
+
+            // Act
+            _cacheService.Add(cacheKey, cacheValue);
+
+            // Act + Arrange
+            _cacheService.TryGetValue<TOutput>(cacheKey, out var value)
+                .Should().BeFalse();
+
+            value.Should().NotBeAssignableTo<TInput>();
+        }
+
+        [Fact]
+        public void Should_Not_ThrowException_On_TryGetValue_When_ItemIsNotConvertible()
+        {
+            // Arrange
+            var cacheValue = _fixture.Create<string>();
+
+            // Act
+            var record = Record.Exception(() =>
+                Should_Return_False_On_TryGetValue_When_ItemIsNotConvertible(cacheValue, default(byte)));
+
+            // Arrange
+            record.Should().BeNull();
         }
 
         public void Dispose()

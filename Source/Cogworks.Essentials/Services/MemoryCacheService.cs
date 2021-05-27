@@ -27,20 +27,20 @@ namespace Cogworks.Essentials.Services
         public MemoryCacheService()
             => _memoryCache = new MemoryCache(new MemoryCacheOptions());
 
-        public bool Contains(string cacheKey)
-            => _memoryCache.TryGetValue(cacheKey, out _);
+        public bool Contains(string key)
+            => _memoryCache.TryGetValue(key, out _);
 
-        public T GetCacheItem<T>(string cacheKey)
-            => _memoryCache.Get(cacheKey) is T cachedObject
+        public T Get<T>(string key)
+            => _memoryCache.Get(key) is T cachedObject
                 ? cachedObject
                 : default;
 
-        public void RemoveCacheItem(string cacheKey)
-            => _memoryCache.Remove(cacheKey);
+        public void Remove(string key)
+            => _memoryCache.Remove(key);
 
-        public void AddCacheItem(string cacheKey, object value, int? cacheDurationInSeconds = null)
+        public void Add(string key, object value, int? cacheDurationInSeconds = null)
         {
-            AddCacheKeyToCacheKeysDefinitions(cacheKey);
+            AddCacheKeyToCacheKeysDefinitions(key);
 
             cacheDurationInSeconds ??= DateTimeConstants.TimeInSecondsConstants.Hour;
             var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(cacheDurationInSeconds.Value);
@@ -49,12 +49,12 @@ namespace Cogworks.Essentials.Services
                 .SetAbsoluteExpiration(cacheDurationDateTime)
                 .RegisterPostEvictionCallback(CacheCallback);
 
-            _memoryCache.Set(cacheKey, value, entryOptions);
+            _memoryCache.Set(key, value, entryOptions);
         }
 
-        public T GetOrAddCacheItem<T>(string cacheKey, Func<T> getValueFunction, int? cacheDurationInSeconds = null)
+        public T GetOrAdd<T>(string key, Func<T> getValueFunction, int? cacheDurationInSeconds = null)
         {
-            var cacheEntry = _memoryCache.GetOrCreate(cacheKey, entry =>
+            var cacheEntry = _memoryCache.GetOrCreate(key, entry =>
             {
                 cacheDurationInSeconds ??= DateTimeConstants.TimeInSecondsConstants.Hour;
                 var cacheDurationDateTime = DateTime.UtcNow.AddSeconds(cacheDurationInSeconds.Value);
@@ -66,7 +66,7 @@ namespace Cogworks.Essentials.Services
                     EvictionCallback = CacheCallback
                 });
 
-                AddCacheKeyToCacheKeysDefinitions(cacheKey);
+                AddCacheKeyToCacheKeysDefinitions(key);
 
                 return getValueFunction();
             });
@@ -81,19 +81,19 @@ namespace Cogworks.Essentials.Services
         /// - When the creation of an item has to be ensured to be done once per key.
         /// </summary>
         /// https://michaelscodingspot.com/cache-implementations-in-csharp-net/
-        public async Task<T> GetOrAddCacheItemAsync<T>(string cacheKey, Func<Task<T>> getValueFunction, int? cacheDurationInSeconds = null)
+        public async Task<T> GetOrAddAsync<T>(string key, Func<Task<T>> getValueFunction, int? cacheDurationInSeconds = null)
         {
-            if (_memoryCache.TryGetValue(cacheKey, out T cacheEntry))
+            if (_memoryCache.TryGetValue(key, out T cacheEntry))
             {
                 return cacheEntry;
             }
 
-            var myLock = Locks.GetOrAdd(cacheKey, k => new SemaphoreSlim(1, 1));
+            var myLock = Locks.GetOrAdd(key, k => new SemaphoreSlim(1, 1));
             await myLock.WaitAsync();
 
             try
             {
-                if (!_memoryCache.TryGetValue(cacheKey, out cacheEntry))
+                if (!_memoryCache.TryGetValue(key, out cacheEntry))
                 {
                     cacheEntry = await getValueFunction();
 
@@ -104,7 +104,7 @@ namespace Cogworks.Essentials.Services
                         .SetAbsoluteExpiration(cacheDurationDateTime)
                         .RegisterPostEvictionCallback(CacheCallback);
 
-                    _memoryCache.Set(cacheKey, cacheEntry, entryOptions);
+                    _memoryCache.Set(key, cacheEntry, entryOptions);
                 }
             }
             finally
@@ -112,14 +112,14 @@ namespace Cogworks.Essentials.Services
                 myLock.Release();
             }
 
-            AddCacheKeyToCacheKeysDefinitions(cacheKey);
+            AddCacheKeyToCacheKeysDefinitions(key);
             return cacheEntry;
         }
 
-        public void ClearAllStartingWith(string prefixKey)
+        public void ClearAllStartingWith(string keyPrefix)
         {
             var cacheKeys = _cacheKeys
-                .Where(x => x.StartsWith(prefixKey))
+                .Where(x => x.StartsWith(keyPrefix))
                 .ToList();
 
             if (!cacheKeys.HasAny())
@@ -132,6 +132,9 @@ namespace Cogworks.Essentials.Services
                 _memoryCache.Remove(key);
             }
         }
+
+        public bool TryGetValue<T>(string key, out T value)
+            => _memoryCache.TryGetValue(key, out value);
 
         public void ClearAll()
         {
