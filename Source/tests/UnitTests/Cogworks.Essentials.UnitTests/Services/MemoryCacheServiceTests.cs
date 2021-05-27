@@ -441,7 +441,7 @@ namespace Cogworks.Essentials.UnitTests.Services
                             x.CacheKey,
                             async () =>
                             {
-                                await Task.Delay(x.CacheValue * 1000);
+                                await Task.Delay(x.CacheValue * 100);
                                 return x.CacheValue;
                             })))
                 .ToArray();
@@ -469,7 +469,7 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             _cacheService.RemoveCacheItem(cacheKey);
 
-            await Task.Delay(500);
+            await Task.Delay(200);
 
             _cacheService.Contains(cacheKey).Should().BeFalse();
 
@@ -499,7 +499,7 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             memoryCacheService.Contains(cacheKey).Should().BeTrue();
 
-            var delayCount = 2000;
+            var delayCount = 1100;
 
             do
             {
@@ -510,7 +510,7 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             memoryCacheService.Contains(cacheKey).Should().BeFalse();
 
-            await Task.Delay(1000);
+            await Task.Delay(100);
 
             counter.Should().BeGreaterThan(0);
             memoryCacheService.GetKeys().Should().BeEmpty();
@@ -537,7 +537,7 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             memoryCacheService.Contains(cacheKey).Should().BeTrue();
 
-            var delayCount = 2000;
+            var delayCount = 1100;
 
             do
             {
@@ -548,7 +548,7 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             memoryCacheService.Contains(cacheKey).Should().BeFalse();
 
-            await Task.Delay(1000);
+            await Task.Delay(100);
 
             counter.Should().BeGreaterThan(0);
             memoryCacheService.GetKeys().Should().BeEmpty();
@@ -575,7 +575,7 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             memoryCacheService.Contains(cacheKey).Should().BeTrue();
 
-            var delayCount = 2000;
+            var delayCount = 1100;
 
             do
             {
@@ -586,7 +586,7 @@ namespace Cogworks.Essentials.UnitTests.Services
 
             memoryCacheService.Contains(cacheKey).Should().BeFalse();
 
-            await Task.Delay(2000);
+            await Task.Delay(100);
 
             counter.Should().BeGreaterThan(0);
             memoryCacheService.GetKeys().Should().BeEmpty();
