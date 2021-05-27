@@ -331,6 +331,9 @@ dotnet_diagnostic.SA1518.severity = none
 # CA1063: Implement IDisposable correctly
 dotnet_diagnostic.CA1063.severity = none
 
+# CA1032: Implement standard exception constructors
+dotnet_diagnostic.CA1032.severity = suggestion
+
 [*.generated.cs]
 # Treat all cs files in this folder as generated code
 
