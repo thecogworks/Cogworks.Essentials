@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -68,7 +68,9 @@ namespace Cogworks.Essentials.Services
 
                 AddCacheKeyToCacheKeysDefinitions(key);
 
-                return getValueFunction();
+                var factoryItem = new Lazy<T>(getValueFunction);
+
+                return factoryItem.Value;
             });
 
             return cacheEntry;
