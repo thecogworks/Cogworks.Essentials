@@ -745,6 +745,20 @@ namespace Cogworks.Essentials.UnitTests.Services
             value.Should().NotBeAssignableTo<TInput>();
         }
 
+        [Fact]
+        public void Should_Not_ThrowException_On_TryGetValue_When_ItemIsNotConvertible()
+        {
+            // Arrange
+            var cacheValue = _fixture.Create<string>();
+
+            // Act
+            var record = Record.Exception(() =>
+                Should_Return_False_On_TryGetValue_When_ItemIsNotConvertible(cacheValue, default(byte)));
+
+            // Arrange
+            record.Should().BeNull();
+        }
+
         public void Dispose()
             => _inMemoryCache.Dispose();
     }
