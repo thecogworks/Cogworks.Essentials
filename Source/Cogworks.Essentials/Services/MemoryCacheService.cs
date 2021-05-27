@@ -174,7 +174,7 @@ namespace Cogworks.Essentials.Services
 
         private void CacheCallback(object key, object value, EvictionReason reason, object state)
         {
-            if (reason == EvictionReason.Replaced || key is not string cacheKey)
+            if (reason == EvictionReason.Replaced || !(key is string cacheKey))
             {
                 return;
             }
