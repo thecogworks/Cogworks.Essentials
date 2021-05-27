@@ -1,3 +1,27 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/thecogworks/Cogworks.Essentials/compare/1.0.3...1.1.0) (2021-05-27)
+
+
+### Bug Fixes
+
+* added missing project NuGet dependencies ([db3b0e2](https://github.com/thecogworks/Cogworks.Essentials/commit/db3b0e2))
+* fixing pull request build ([75e7086](https://github.com/thecogworks/Cogworks.Essentials/commit/75e7086))
+
+
+### Features
+
+* add clearing all cache items ([4c5ab93](https://github.com/thecogworks/Cogworks.Essentials/commit/4c5ab93))
+* added immutable package collection ([e7e10d9](https://github.com/thecogworks/Cogworks.Essentials/commit/e7e10d9))
+* added memory cache service tests ([322c694](https://github.com/thecogworks/Cogworks.Essentials/commit/322c694))
+* added pull request workflow ([d1d0fb9](https://github.com/thecogworks/Cogworks.Essentials/commit/d1d0fb9))
+* added try get value to cache service ([2f2b685](https://github.com/thecogworks/Cogworks.Essentials/commit/2f2b685))
+* added unit test project ([0526047](https://github.com/thecogworks/Cogworks.Essentials/commit/0526047))
+* adding AddRangeUnique extension ([e408aba](https://github.com/thecogworks/Cogworks.Essentials/commit/e408aba))
+* adding nullable cache duration for the cache service ([0333aa2](https://github.com/thecogworks/Cogworks.Essentials/commit/0333aa2))
+* changed memory cache key list implementation ([e2a3cfb](https://github.com/thecogworks/Cogworks.Essentials/commit/e2a3cfb))
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/thecogworks/Cogworks.Essentials/compare/1.0.2...1.0.3) (2021-05-11)
 
