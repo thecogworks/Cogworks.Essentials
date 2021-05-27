@@ -8,7 +8,7 @@ namespace Cogworks.Essentials.EventArgs
 
         public object Value { get; }
 
-        public EvictionReason EvictionReason { get; set; }
+        public EvictionReason EvictionReason { get; }
 
         public CacheEvictionArgs(object key, object value, EvictionReason evictionReason)
         {
