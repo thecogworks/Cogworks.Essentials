@@ -1,3 +1,13 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/thecogworks/Cogworks.Essentials/compare/1.1.0...1.1.1) (2021-05-27)
+
+
+### Bug Fixes
+
+* changed preview pattern matching ([fa6ba96](https://github.com/thecogworks/Cogworks.Essentials/commit/fa6ba96))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/thecogworks/Cogworks.Essentials/compare/1.0.3...1.1.0) (2021-05-27)
 
