@@ -68,7 +68,9 @@ namespace Cogworks.Essentials.Services
 
                 AddCacheKeyToCacheKeysDefinitions(key);
 
-                return getValueFunction();
+                var factoryItem = new Lazy<T>(getValueFunction);
+
+                return factoryItem.Value;
             });
 
             return cacheEntry;
@@ -83,7 +85,9 @@ namespace Cogworks.Essentials.Services
         /// https://michaelscodingspot.com/cache-implementations-in-csharp-net/
         public async Task<T> GetOrAddAsync<T>(string key, Func<Task<T>> getValueFunction, int? cacheDurationInSeconds = null)
         {
-            if (_memoryCache.TryGetValue(key, out T cacheEntry))
+            var hasEntry = _memoryCache.TryGetValue(key, out T cacheEntry);
+
+            if (hasEntry)
             {
                 return cacheEntry;
             }
@@ -93,7 +97,7 @@ namespace Cogworks.Essentials.Services
 
             try
             {
-                if (!_memoryCache.TryGetValue(key, out cacheEntry))
+                if (!hasEntry)
                 {
                     cacheEntry = await getValueFunction();
 
