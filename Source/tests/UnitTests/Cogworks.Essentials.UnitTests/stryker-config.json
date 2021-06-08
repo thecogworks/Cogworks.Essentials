@@ -1,0 +1,23 @@
+{
+  "stryker-config": {
+    "reporters": [
+      "html",
+      "cleartext"
+    ],
+    "timeout-ms": 20000,
+    "log-file": true,
+    "project-file": "Cogworks.Essentials.csproj",
+    "max-concurrent-test-runners": 4,
+    "threshold-high": 80,
+    "threshold-low": 70,
+    "threshold-break": 60,
+    "mutation-level": "Standard",
+    "mutate": [
+      "!Constants/*.*",
+      "!EventsArgs/*.*",
+      "!Extensions/*.*",
+      "!Helpers/*.*"
+    ],
+    "coverage-analysis": "perTestInIsolation"
+  }
+}
