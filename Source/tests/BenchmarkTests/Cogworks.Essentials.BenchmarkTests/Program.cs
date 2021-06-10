@@ -1,7 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 
-namespace BenchmarkTests
+namespace Cogworks.Essentials.BenchmarkTests
 {
     [MemoryDiagnoser]
     internal class Program

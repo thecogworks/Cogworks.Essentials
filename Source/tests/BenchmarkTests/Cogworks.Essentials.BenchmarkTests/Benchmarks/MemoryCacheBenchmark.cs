@@ -5,7 +5,7 @@ using BenchmarkDotNet.Engines;
 using Cogworks.Essentials.Services;
 using Cogworks.Essentials.Services.Interfaces;
 
-namespace BenchmarkTests.Benchmarks
+namespace Cogworks.Essentials.BenchmarkTests.Benchmarks
 {
     [SimpleJob(RunStrategy.ColdStart, invocationCount: 5)]
     public class MemoryCacheBenchmark
