@@ -87,17 +87,12 @@ namespace Cogworks.Essentials.Services
         {
             var hasEntry = _memoryCache.TryGetValue(key, out T cacheEntry);
 
-            if (hasEntry)
+            if (!hasEntry)
             {
-                return cacheEntry;
-            }
+                var myLock = Locks.GetOrAdd(key, k => new SemaphoreSlim(1, 1));
+                await myLock.WaitAsync();
 
-            var myLock = Locks.GetOrAdd(key, k => new SemaphoreSlim(1, 1));
-            await myLock.WaitAsync();
-
-            try
-            {
-                if (!hasEntry)
+                try
                 {
                     cacheEntry = await getValueFunction();
 
@@ -109,14 +104,14 @@ namespace Cogworks.Essentials.Services
                         .RegisterPostEvictionCallback(CacheCallback);
 
                     _memoryCache.Set(key, cacheEntry, entryOptions);
+                    AddCacheKeyToCacheKeysDefinitions(key);
+                }
+                finally
+                {
+                    myLock.Release();
                 }
             }
-            finally
-            {
-                myLock.Release();
-            }
 
-            AddCacheKeyToCacheKeysDefinitions(key);
             return cacheEntry;
         }
 
