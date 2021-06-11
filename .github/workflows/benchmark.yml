@@ -89,7 +89,6 @@ jobs:
             -f netcoreapp3.1 `
             --no-build `
             --no-restore `
-            --runtimes netcoreapp31 `
             --filter * `
             --join `
             --warmupCount 1 `
