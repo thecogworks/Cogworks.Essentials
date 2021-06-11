@@ -21,7 +21,7 @@ namespace Cogworks.Essentials.BenchmarkTests.Benchmarks
 
         private TestData<int>[] _testData;
 
-        [Params(1, 2, 1000, 10000, 100000)]
+        [Params(1, 2, 100, 1000)]
         public int ItemsCount { get; set; }
 
         [GlobalSetup]
