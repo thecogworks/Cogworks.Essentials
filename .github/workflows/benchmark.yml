@@ -25,7 +25,7 @@ env:
   NUGET_VERSION: 'latest'
 
 jobs:
-  build-and-test:
+  build-and-benchmark:
     runs-on: windows-latest
     steps:
       - name: Checkout commit
@@ -114,13 +114,6 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: benchmark-results
-
-      - name: Comment PR - test report
-        uses: machine-learning-apps/pr-comment@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          path: results/${{ env.TestReportFileName }}
 
       - name: Comment PR - benchmark report
         uses: machine-learning-apps/pr-comment@master
