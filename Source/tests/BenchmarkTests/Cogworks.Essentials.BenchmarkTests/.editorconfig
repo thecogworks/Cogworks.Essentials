@@ -1,0 +1,13 @@
+[*.cs]
+
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = none
+
+# IDE0059: Unnecessary assignment of a value
+csharp_style_unused_value_assignment_preference = unused_local_variable
+
+# SA1402: File may only contain a single type
+dotnet_diagnostic.SA1402.severity = none
+
+# CS8019: Unnecessary using directive
+dotnet_diagnostic.CS8019.severity = none
