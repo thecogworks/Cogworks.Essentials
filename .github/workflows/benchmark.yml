@@ -105,7 +105,7 @@ jobs:
           path: ${{ env.BENCHMARK_REPORT_OUTPUT }}\${{ env.BENCHMARK_REPORT }}
 
   commenting:
-    needs: build-and-test
+    needs: build-and-benchmark
     runs-on: ubuntu-latest
     steps:
       - name: Checkout commit
