@@ -1,10 +1,11 @@
-name: PR build and tests validation
+name: Benchmark
 on:
   pull_request:
 
 env:
-  ReportOutput: '${{github.workspace}}'
-  TestReportFileName: 'TestReport.${{github.run_number}}.md'
+  BENCHMARK_PROJECT: 'Source\tests\BenchmarkTests\Cogworks.Essentials.BenchmarkTests\Cogworks.Essentials.BenchmarkTests.csproj'
+  BENCHMARK_REPORT: 'Cogworks.Essentials.BenchmarkTests.Benchmarks.MemoryCacheBenchmark-report-github.md'
+  BENCHMARK_REPORT_OUTPUT: '${{github.workspace}}\BenchmarkDotNet.Artifacts\results'
 
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
@@ -79,28 +80,29 @@ jobs:
             /p:MarkWebConfigAssistFilesAsExclude=False
           }
 
-      - name: Set PR build number
-        id: PRNUMBER
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: kkak10/pr-number-action@v1.3
-
-      - name: Set Test Title
+      - name: Run Benchmark
+        shell: powershell
         run: |
-          echo "::set-env name=title::Test Run for PR #${{ steps.PRNUMBER.outputs.pr }} (${{ github.run_number }})"
+          dotnet run `
+            -p "${{ env.BENCHMARK_PROJECT }}" `
+            -c ${{ env.CONFIG }} `
+            -f netcoreapp3.1 `
+            --no-build `
+            --no-restore `
+            --runtimes netcoreapp31 `
+            --filter * `
+            --join `
+            --warmupCount 1 `
+            --minIterationCount 9 `
+            --maxIterationCount 10 `
+            --iterationCount 5 `
+            --strategy ColdStart
 
-      - name: Run Tests
-        run: |
-          $solutions = Get-ChildItem -Path . -Recurse -Include *.sln
-
-          foreach ($solutionFile in $solutions){
-            dotnet test "$solutionFile" --no-restore --no-build --configuration ${{ env.CONFIG }} --logger:"liquid.md;LogFileName=${{ env.ReportOutput}}\${{ env.TestReportFileName }};Title=${{ env.Title }};"
-          }
-
-      - name: Upload test results
+      - name: Upload benchmark results
         uses: actions/upload-artifact@v2
         with:
-          name: results
-          path: ${{ env.ReportOutput}}\${{ env.TestReportFileName }}
+          name: benchmark-results
+          path: ${{ env.BENCHMARK_REPORT_OUTPUT }}\${{ env.BENCHMARK_REPORT }}
 
   commenting:
     needs: build-and-test
@@ -111,7 +113,7 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: results
+          name: benchmark-results
 
       - name: Comment PR - test report
         uses: machine-learning-apps/pr-comment@master
@@ -119,3 +121,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           path: results/${{ env.TestReportFileName }}
+
+      - name: Comment PR - benchmark report
+        uses: machine-learning-apps/pr-comment@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          path: benchmark-results/${{ env.BENCHMARK_REPORT }}
