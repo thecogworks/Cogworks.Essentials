@@ -221,3 +221,5 @@ Source/**/*GeneratedMSBuildEditorConfig.editorconfig
 
 dist/
 output/
+
+BenchmarkDotNet.Artifacts/*

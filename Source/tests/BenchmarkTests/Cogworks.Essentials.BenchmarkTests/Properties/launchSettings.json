@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BenchmarkTests": {
+      "commandName": "Project",
+      "commandLineArgs": "--filter * --join --warmupCount 1 --minIterationCount 9 --maxIterationCount 10 --iterationCount 5 --strategy ColdStart"
+    }
+  }
+}
