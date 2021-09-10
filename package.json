@@ -1,5 +1,5 @@
 {
-  "version": "1.1.1",
+  "version": "1.1.2",
   "name": "cogworks-essentials",
   "code": "Cogworks.Essentials",
   "description": "Set of the .NET Standard essentials including common constants, enums, extensions, helpers and services.",
