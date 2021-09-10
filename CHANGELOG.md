@@ -1,3 +1,19 @@
+<a name="1.1.2"></a>
+## [1.1.2](https://github.com/thecogworks/Cogworks.Essentials/compare/1.1.1...1.1.2) (2021-09-10)
+
+
+### Features
+
+* added benchmark reporting ([2e2ea39](https://github.com/thecogworks/Cogworks.Essentials/commit/2e2ea39))
+* added benchmark test project ([abe0a39](https://github.com/thecogworks/Cogworks.Essentials/commit/abe0a39))
+* added memory cache benchmarks ([1792d05](https://github.com/thecogworks/Cogworks.Essentials/commit/1792d05))
+* added stryker configuration ([8183d1b](https://github.com/thecogworks/Cogworks.Essentials/commit/8183d1b))
+* added test mutator ([dbdca5b](https://github.com/thecogworks/Cogworks.Essentials/commit/dbdca5b))
+* added thread safe getting value from sync method ([ff51f51](https://github.com/thecogworks/Cogworks.Essentials/commit/ff51f51))
+* updating nuget packages ([e432908](https://github.com/thecogworks/Cogworks.Essentials/commit/e432908))
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/thecogworks/Cogworks.Essentials/compare/1.1.0...1.1.1) (2021-05-27)
 
